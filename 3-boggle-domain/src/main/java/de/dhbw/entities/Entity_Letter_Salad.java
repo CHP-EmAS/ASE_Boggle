@@ -9,13 +9,13 @@ public class Entity_Letter_Salad {
     private final String uuid;
 
     private VO_Dice_Side[][] diceSideMatrix;
-    private final int matrixSize;
+    private final short matrixSize;
 
     private boolean theDicesAreCast = false;
 
     private final Random randomGenerator;
 
-    public Entity_Letter_Salad(int matrixSize) {
+    public Entity_Letter_Salad(short matrixSize) {
         if(isValidFieldSize(matrixSize)) {
             this.matrixSize = matrixSize;
             diceSideMatrix = new VO_Dice_Side[matrixSize][matrixSize];
@@ -32,7 +32,7 @@ public class Entity_Letter_Salad {
         return this.diceSideMatrix;
     }
 
-    public int getMatrixSize() {
+    public short getMatrixSize() {
         return this.matrixSize;
     }
 

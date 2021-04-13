@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class VO_Word {
+public final class VO_Word {
     private final String uppercaseWord;
 
     public VO_Word(String uppercaseWord){

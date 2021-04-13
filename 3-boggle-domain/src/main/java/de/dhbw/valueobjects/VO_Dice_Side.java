@@ -2,16 +2,12 @@ package de.dhbw.valueobjects;
 
 import java.util.Objects;
 
-public class VO_Dice_Side {
-    private static long idCounter = 0;
-    private final long id;
-
+public final class VO_Dice_Side {
     private final char letter;
 
     public VO_Dice_Side(char letter){
         if(isValid(letter)) {
             this.letter = letter;
-            this.id = idCounter++;
         } else {
             throw new IllegalArgumentException("Char '" + letter + "' is invalid for a dice letter!");
         }
@@ -19,10 +15,6 @@ public class VO_Dice_Side {
 
     public char getLetter() {
         return this.letter;
-    }
-
-    public long getId() {
-        return this.id;
     }
 
     private boolean isValid(char letter) {

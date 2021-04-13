@@ -4,9 +4,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
 
-public class VO_Dice {
-    private static long idCounter = 0;
-    private final long id;
+public final class VO_Dice {
 
     private final VO_Dice_Side[] diceSides = new VO_Dice_Side[6];
 
@@ -15,7 +13,6 @@ public class VO_Dice {
     public VO_Dice(VO_Dice_Side[] diceSides){
         if(isValid(diceSides)) {
             System.arraycopy(diceSides, 0, this.diceSides, 0, 6);
-            this.id = idCounter++;
             randomGenerator = new Random();
         } else {
             throw new IllegalArgumentException("Dice side Array must have a length of 6! Length: " + diceSides.length);
@@ -28,10 +25,6 @@ public class VO_Dice {
 
     public VO_Dice_Side[] getAllDiceSides() {
         return this.diceSides;
-    }
-
-    public long getId() {
-        return this.id;
     }
 
     private boolean isValid(VO_Dice_Side[] diceSides) {

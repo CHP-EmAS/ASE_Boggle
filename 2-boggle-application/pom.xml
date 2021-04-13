@@ -2,20 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>advanced_swe_boggle</artifactId>
+        <groupId>de.dhbw</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.dhbw</groupId>
-    <artifactId>advanced_swe_boggle</artifactId>
-    <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
-
-    <modules>
-        <module>0-boggle-plugins</module>
-        <module>1-boggle-adapters</module>
-        <module>2-boggle-application</module>
-        <module>3-boggle-domain</module>
-        <module>4-boggle-abstractions</module>
-    </modules>
+    <artifactId>2-boggle-application</artifactId>
 
     <properties>
         <maven.compiler.source>16</maven.compiler.source>

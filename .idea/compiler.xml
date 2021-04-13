@@ -6,7 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="advanced_swe_boggle" />
+        <module name="0-boggle-plugins" />
+        <module name="4-boggle-abstractions" />
+        <module name="1-boggle-adapters" />
+        <module name="2-boggle-application" />
+        <module name="3-boggle-domain" />
       </profile>
     </annotationProcessing>
   </component>

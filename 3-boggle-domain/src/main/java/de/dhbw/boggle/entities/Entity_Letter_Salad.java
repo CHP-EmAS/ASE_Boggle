@@ -1,7 +1,8 @@
-package de.dhbw.entities;
+package de.dhbw.boggle.entities;
 
-import de.dhbw.valueobjects.VO_Dice;
-import de.dhbw.valueobjects.VO_Dice_Side;
+import de.dhbw.boggle.valueobjects.VO_Dice;
+import de.dhbw.boggle.valueobjects.VO_Dice_Side;
+import de.dhbw.boggle.valueobjects.VO_Field_Size;
 
 import java.util.*;
 
@@ -9,31 +10,28 @@ public class Entity_Letter_Salad {
     private final String uuid;
 
     private VO_Dice_Side[][] diceSideMatrix;
-    private final short matrixSize;
+    private final VO_Field_Size fieldSize;
 
     private boolean theDicesAreCast = false;
 
     private final Random randomGenerator;
 
-    public Entity_Letter_Salad(short matrixSize) {
-        if(isValidFieldSize(matrixSize)) {
-            this.matrixSize = matrixSize;
-            diceSideMatrix = new VO_Dice_Side[matrixSize][matrixSize];
+    public Entity_Letter_Salad(VO_Field_Size fieldSize) {
 
-            this.uuid = UUID.randomUUID().toString();
+        this.fieldSize = fieldSize;
+        diceSideMatrix = new VO_Dice_Side[ this.fieldSize.getSize() ][ this.fieldSize.getSize() ];
 
-            randomGenerator = new Random();
-        } else {
-            throw new IllegalArgumentException("Matrix size for the letter salad must be greater than 0: Given size was: " + matrixSize);
-        }
+        this.uuid = UUID.randomUUID().toString();
+        randomGenerator = new Random();
+
     }
 
     public VO_Dice_Side[][] getDiceSideMatrix() {
         return this.diceSideMatrix;
     }
 
-    public short getMatrixSize() {
-        return this.matrixSize;
+    public VO_Field_Size getFieldSizeFromMatrix() {
+        return this.fieldSize;
     }
 
     public boolean haveTheDicesBeenCast() {
@@ -45,13 +43,13 @@ public class Entity_Letter_Salad {
     }
 
     public void throwTheDices(VO_Dice[] dices) {
-        if(dices.length != this.matrixSize * this.matrixSize)
-            throw new RuntimeException("Number of dices must correspond to the number of matrix elements in the letter salad! There were passed " + dices.length + " dices to a " + this.matrixSize + "x" + this.matrixSize + " letter salad.");
+        if(dices.length != this.fieldSize.getSize() * this.fieldSize.getSize())
+            throw new RuntimeException("Number of dices must correspond to the number of matrix elements in the letter salad! There were passed " + dices.length + " dices to a " + this.fieldSize.getSize() + "x" + this.fieldSize.getSize() + " letter salad.");
 
         List<VO_Dice> diceList = Arrays.asList(dices);
 
-        for(int x = 0; x < matrixSize; x++) {
-            for(int y = 0; y < matrixSize; y++) {
+        for(int x = 0; x < this.fieldSize.getSize(); x++) {
+            for(int y = 0; y < this.fieldSize.getSize(); y++) {
                 int randomDiceIndex = randomGenerator.nextInt(diceList.size());
                 VO_Dice randomDice = diceList.get(randomDiceIndex);
 
@@ -62,10 +60,6 @@ public class Entity_Letter_Salad {
         }
 
         theDicesAreCast = true;
-    }
-
-    private boolean isValidFieldSize(int matrixSize) {
-        return matrixSize > 0;
     }
 
     @Override

@@ -1,7 +1,5 @@
-package de.dhbw.valueobjects;
+package de.dhbw.boggle.valueobjects;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 public final class VO_Word {
@@ -11,7 +9,7 @@ public final class VO_Word {
         if(isValid(uppercaseWord)) {
             this.uppercaseWord = uppercaseWord;
         } else {
-            throw new IllegalArgumentException("String '" + uppercaseWord + "' is invalid for a Word! All letters must be uppercase letters");
+            throw new IllegalArgumentException("String '" + uppercaseWord + "' is invalid for a Word! All letters must be uppercase letters and the Word must have at lest on letter");
         }
     }
 
@@ -26,7 +24,7 @@ public final class VO_Word {
             }
         }
 
-        return true;
+        return uppercaseWord.length() > 0;
     }
 
     @Override

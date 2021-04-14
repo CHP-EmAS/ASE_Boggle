@@ -1,4 +1,4 @@
-package de.dhbw.valueobjects;
+package de.dhbw.boggle.valueobjects;
 
 import java.util.Objects;
 
@@ -9,7 +9,7 @@ public final class VO_Points {
         if(isValid(points)) {
             this.points = points;
         } else {
-            throw new IllegalArgumentException("Points must be greater than 0! Given integer was " + points);
+            throw new IllegalArgumentException("Points can not be negative! Given integer was " + points);
         }
     }
 
@@ -18,7 +18,7 @@ public final class VO_Points {
     }
 
     private boolean isValid(int points) {
-        return points > 0;
+        return points >= 0;
     }
 
     @Override

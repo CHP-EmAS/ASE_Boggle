@@ -1,4 +1,4 @@
-package de.dhbw.valueobjects;
+package de.dhbw.boggle.valueobjects;
 
 import java.util.Arrays;
 import java.util.Objects;

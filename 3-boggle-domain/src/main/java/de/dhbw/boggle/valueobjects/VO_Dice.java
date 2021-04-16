@@ -19,6 +19,19 @@ public final class VO_Dice {
         }
     }
 
+    public VO_Dice(String diceLetters){
+        if(isValid(diceLetters)) {
+
+            for(int i = 0; i < 6; i++) {
+                diceSides[i] = new VO_Dice_Side(diceLetters.charAt(i));
+            }
+
+            randomGenerator = new Random();
+        } else {
+            throw new IllegalArgumentException("Dice letter String must have a length of 6! Length: " + diceLetters.length());
+        }
+    }
+
     public VO_Dice_Side getRandomDiceSide() {
         return diceSides[randomGenerator.nextInt(6)];
     }
@@ -29,6 +42,10 @@ public final class VO_Dice {
 
     private boolean isValid(VO_Dice_Side[] diceSides) {
         return diceSides.length == 6;
+    }
+
+    private boolean isValid(String diceLetters) {
+        return diceLetters.length() == 6;
     }
 
     @Override

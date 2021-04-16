@@ -10,6 +10,7 @@
         <module name="4-boggle-abstractions" />
         <module name="1-boggle-adapters" />
         <module name="2-boggle-application" />
+        <module name="0-boggle-frontend" />
         <module name="3-boggle-domain" />
       </profile>
     </annotationProcessing>

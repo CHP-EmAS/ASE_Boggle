@@ -15,6 +15,7 @@
         <module>2-boggle-application</module>
         <module>3-boggle-domain</module>
         <module>4-boggle-abstractions</module>
+        <module>0-boggle-frontend</module>
     </modules>
 
     <properties>

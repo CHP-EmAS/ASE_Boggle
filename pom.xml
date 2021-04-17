@@ -10,12 +10,12 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
+        <module>0-boggle-frontend</module>
         <module>0-boggle-plugins</module>
         <module>1-boggle-adapters</module>
         <module>2-boggle-application</module>
         <module>3-boggle-domain</module>
         <module>4-boggle-abstractions</module>
-        <module>0-boggle-frontend</module>
     </modules>
 
     <properties>

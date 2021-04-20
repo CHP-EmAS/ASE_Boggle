@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.dhbw.boggle.scenes.Welcome_Scene">
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.dhbw.boggle.scenes.Welcome_Scene">
    <center>
-      <AnchorPane prefHeight="400.0" prefWidth="935.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="223.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
                <image>

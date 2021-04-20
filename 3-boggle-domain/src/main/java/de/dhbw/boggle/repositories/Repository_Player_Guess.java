@@ -12,13 +12,15 @@ public interface Repository_Player_Guess {
 
     List<Entity_Player_Guess> getAllPlayerGuessesByPlayingFieldId(String playingFieldId);
 
-    List<Entity_Player_Guess> getAllUnexaminedGuessesByPlayingFieldId(String playingFieldId);
+    List<Entity_Player_Guess> getAllPlayerGuessesByPlayerId(String playerId);
 
-    List<Entity_Player_Guess> getAllExaminedGuessesByPlayingFieldId(String playingFieldId);
+    List<Entity_Player_Guess> getAllUnexaminedGuessesFromGuessList(List<Entity_Player_Guess> guessList);
 
-    List<Entity_Player_Guess> getAllWrongGuessesByPlayingFieldId(String playingFieldId);
+    List<Entity_Player_Guess> getAllExaminedGuessesFromGuessList(List<Entity_Player_Guess> guessList);
 
-    List<Entity_Player_Guess> getAllCorrectGuessesByPlayingFieldId(String playingFieldId);
+    List<Entity_Player_Guess> getAllWrongGuessesFromGuessList(List<Entity_Player_Guess> guessList);
+
+    List<Entity_Player_Guess> getAllCorrectGuessesFromGuessList(List<Entity_Player_Guess> guessList);
 
     List<Entity_Player_Guess> getAllGuesses();
 

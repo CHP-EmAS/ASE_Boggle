@@ -2,13 +2,13 @@ package de.dhbw.boggle.valueobjects;
 
 import java.util.Objects;
 
-public class VO_Field_Size {
-    private final int fieldSize;
+public final class VO_Field_Size {
+    private final short fieldSize;
 
-    private final int minFieldSize = 3; //included
-    private final int maxFieldSize = 7; //included
+    private final short minFieldSize = 4; //included
+    private final short maxFieldSize = 5; //included
 
-    public VO_Field_Size(int fieldSize){
+    public VO_Field_Size(short fieldSize){
         if(isValid(fieldSize)) {
             this.fieldSize = fieldSize;
         } else {
@@ -16,11 +16,11 @@ public class VO_Field_Size {
         }
     }
 
-    public int getSize() {
+    public short getSize() {
         return this.fieldSize;
     }
 
-    private boolean isValid(int fieldSize) {
+    private boolean isValid(short fieldSize) {
         return fieldSize >= minFieldSize && fieldSize <= maxFieldSize;
     }
 

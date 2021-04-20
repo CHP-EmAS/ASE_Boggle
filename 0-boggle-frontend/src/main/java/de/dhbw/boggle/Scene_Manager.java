@@ -12,7 +12,7 @@ public class Scene_Manager extends Application {
 
     private Scene_Creator sceneFactory = new Simple_Scene_Factory();
 
-    private Boggle_Scene currentScene = sceneFactory.getScene(Scene_Creator.SCENE.WELCOME_SCENE, this);
+    private Boggle_Scene currentScene = sceneFactory.getScene(Scene_Creator.SCENE.GAME_SCENE, this);
 
     private Stage mainStage;
 
@@ -24,6 +24,8 @@ public class Scene_Manager extends Application {
         mainStage.getIcons().add(icon);
 
         mainStage.setTitle("Boggle");
+        mainStage.setResizable(false);
+
         mainStage.setScene(currentScene.getScene());
         mainStage.show();
     }

@@ -133,7 +133,7 @@ public class Repository_Bridge_Ranking implements Repository_Ranking {
 
         String playerName = (String) rankingEntryObject.get("playerName");
         int points = (int) rankingEntryObject.get("points");
-        int fieldSize = (int) rankingEntryObject.get("fieldSize");
+        short fieldSize = (short) rankingEntryObject.get("fieldSize");
         String date = (String) rankingEntryObject.get("dateString");
 
         return new Entity_Ranking_Entry(playerName, new VO_Points(points), new VO_Field_Size(fieldSize), new VO_Date(date));

@@ -39,11 +39,11 @@ public class Welcome_Scene extends Boggle_Scene {
     }
 
     @FXML
-    public void initialize() throws InterruptedException {
+    public void initialize() {
 
         DWDS_Digital_Dictionary_API api = new DWDS_Digital_Dictionary_API();
 
-        if(api.checkIfDudenServiceIsAvailable()) {
+        if(api.dudenServiceIsAvailable()) {
             apiCheckLabel.setText("Online Wörterbuch steht zur Verfügung!");
             playWithoutPoints.setText("Spielen!");
         } else {
@@ -52,11 +52,10 @@ public class Welcome_Scene extends Boggle_Scene {
 
         playWithoutPoints.setVisible(true);
         playWithoutPoints.setDisable(false);
-
     }
 
     public void goToMenu(ActionEvent event) {
         System.out.println("goToMenu");
-        super.sceneManager.changeScene(Scene_Creator.SCENE.MAIN_MENU);
+        sceneManager.changeScene(Scene_Creator.SCENE.MAIN_MENU);
     }
 }

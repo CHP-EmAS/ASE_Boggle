@@ -18,14 +18,16 @@ public class Entity_Player_Guess {
     private static long idCounter;
 
     private final VO_Word word;
-    private final Aggregate_Playing_Field playingField;
+    private final Aggregate_Playing_Field assignedPlayingField;
+    private final Entity_Player assignedPlayer;
 
     private VO_Points calculatedPoints;
     private Guess_Flag guessFlag;
 
-    public Entity_Player_Guess(VO_Word word, Aggregate_Playing_Field playingField) {
+    public Entity_Player_Guess(VO_Word word, Aggregate_Playing_Field assignedPlayingField, Entity_Player assignedPlayer) {
 
-        this.playingField = playingField;
+        this.assignedPlayingField = assignedPlayingField;
+        this.assignedPlayer = assignedPlayer;
         this.word = word;
 
         guessFlag = Guess_Flag.NOT_EXAMINED;
@@ -59,8 +61,12 @@ public class Entity_Player_Guess {
         return guessFlag;
     }
 
-    public Aggregate_Playing_Field getPlayingField() {
-        return this.playingField;
+    public Aggregate_Playing_Field getAssignedPlayingField() {
+        return this.assignedPlayingField;
+    }
+
+    public Entity_Player getAssignedPlayer() {
+        return this.assignedPlayer;
     }
 
     public VO_Word getWord() {

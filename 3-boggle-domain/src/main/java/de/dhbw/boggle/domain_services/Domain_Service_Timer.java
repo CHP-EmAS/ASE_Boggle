@@ -1,8 +1,10 @@
 package de.dhbw.boggle.domain_services;
 
-import java.util.function.Function;
+import java.time.Duration;
 
 public interface Domain_Service_Timer {
-    void startTimer(Function callback);
+
+    void startTimer(Duration countdownDuration);
     void cancelTimer();
+
 }

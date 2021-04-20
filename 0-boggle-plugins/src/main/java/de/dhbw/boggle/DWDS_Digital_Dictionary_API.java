@@ -18,8 +18,15 @@ import java.util.Scanner;
 
 public class DWDS_Digital_Dictionary_API implements Domain_Service_Duden_Check {
 
+    private static boolean checkedIfAPIIsAvailable = false;
+    private static boolean apiAvailable = false;
+
     @Override
-    public boolean checkIfDudenServiceIsAvailable() {
+    public boolean dudenServiceIsAvailable() {
+
+        if(checkedIfAPIIsAvailable)
+            return apiAvailable;
+
         try {
             URL url = new URL("https://www.dwds.de/api/wb/snippet/?q=Test");
 
@@ -27,7 +34,9 @@ public class DWDS_Digital_Dictionary_API implements Domain_Service_Duden_Check {
             conn.setRequestMethod("GET");
             conn.connect();
 
-            return (conn.getResponseCode() == 200);
+            apiAvailable = (conn.getResponseCode() == 200);
+            checkedIfAPIIsAvailable = true;
+
         } catch (ProtocolException e) {
             e.printStackTrace();
         } catch (MalformedURLException e) {
@@ -36,11 +45,14 @@ public class DWDS_Digital_Dictionary_API implements Domain_Service_Duden_Check {
             e.printStackTrace();
         }
 
-        return false;
+        return apiAvailable;
     }
 
     @Override
     public boolean lookUpWordInDuden(VO_Word word) {
+
+        if(!checkedIfAPIIsAvailable || !apiAvailable)
+           throw new RuntimeException("API is not available or has not yet been checked for availability!");
 
         String upperCaseWord = word.getWord();
         String lowerCaseWord = upperCaseWord.toLowerCase();

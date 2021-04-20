@@ -19,8 +19,8 @@ public abstract class Scene_Creator {
 
         newScene.setSceneManager(sceneManager);
 
-        newScene.build();
         newScene.init();
+        newScene.build();
 
         return newScene;
     }

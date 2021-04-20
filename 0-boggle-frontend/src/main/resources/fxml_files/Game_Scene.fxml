@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <TextArea fx:id="wordList" disable="true" editable="false" focusTraversable="false" layoutX="558.0" prefHeight="500.0" prefWidth="192.0" text="TEST">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </TextArea>
+   <Pane fx:id="textInputPane" layoutX="57.0" layoutY="46.0" prefHeight="454.0" prefWidth="459.0">
+      <Label fx:id="textInputLabel" alignment="CENTER" layoutX="68.0" layoutY="320.0" prefHeight="48.0"
+             prefWidth="324.0" text="Tippe dein Wort hier ein...">
+         <font>
+            <Font name="System Bold" size="22.0"/>
+         </font>
+      </Label>
+      <Button fx:id="eventButton" layoutY="380.0" mnemonicParsing="false" onAction="#eventButtonClicked"
+              prefHeight="31.0" prefWidth="459.0" text="Starten">
+         <font>
+            <Font size="15.0"/>
+         </font>
+      </Button>
+      <ProgressBar fx:id="timerProgress" disable="true" layoutY="380.0" prefHeight="31.0" prefWidth="459.0"
+                   progress="1.0" visible="false"/>
+      <Label fx:id="timerLabel" alignment="CENTER" disable="true" layoutX="195.0" layoutY="411.0" prefHeight="31.0"
+             prefWidth="70.0" text="03:00" textFill="RED" visible="false">
+         <font>
+            <Font size="20.0"/>
+         </font>
+      </Label>
+      <Pane fx:id="gamePane" layoutX="70.0" prefHeight="320.0" prefWidth="320.0"/>
+   </Pane>
+</AnchorPane>

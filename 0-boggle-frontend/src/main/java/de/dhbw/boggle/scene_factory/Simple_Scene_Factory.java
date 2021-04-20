@@ -2,8 +2,10 @@ package de.dhbw.boggle.scene_factory;
 
 import de.dhbw.boggle.Scene_Manager;
 import de.dhbw.boggle.scenes.Boggle_Scene;
+import de.dhbw.boggle.scenes.Game_Scene;
 import de.dhbw.boggle.scenes.Main_Menu_Scene;
 import de.dhbw.boggle.scenes.Welcome_Scene;
+import de.dhbw.boggle.valueobjects.VO_Field_Size;
 
 public class Simple_Scene_Factory extends Scene_Creator{
 
@@ -18,6 +20,7 @@ public class Simple_Scene_Factory extends Scene_Creator{
                 return new Main_Menu_Scene();
             case START_GAME_SCENE:
             case GAME_SCENE:
+                return new Game_Scene(new VO_Field_Size((short) 4));
             case RANKING_LIST_SCENE:
             case CREDITS_SCENE:
                 return null;

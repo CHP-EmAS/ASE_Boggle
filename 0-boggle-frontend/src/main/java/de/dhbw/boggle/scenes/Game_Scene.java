@@ -1,77 +1,80 @@
 package de.dhbw.boggle.scenes;
 
 import de.dhbw.boggle.CountdownService;
-import de.dhbw.boggle.DWDS_Digital_Dictionary_API;
-import de.dhbw.boggle.Resource_Mapper_Dice_Side_Matrix;
-import de.dhbw.boggle.Resource_Mapper_Time;
+import de.dhbw.boggle.API_DWDS_Digital_Dictionary;
+import de.dhbw.boggle.Guess_List_View_Cell;
+import de.dhbw.boggle.dice_side_matrix.Mapper_Dice_Side_Matrix;
+import de.dhbw.boggle.player_guess.Mapper_Player_Guess_List;
+import de.dhbw.boggle.player_guess.Player_Guess;
+import de.dhbw.boggle.time.Mapper_Time;
+import de.dhbw.boggle.entities.Entity_Player;
+import de.dhbw.boggle.repositories.Repository_Player_Guess;
+import de.dhbw.boggle.repository_bridges.Repository_Bridge_Player_Guess;
 import de.dhbw.boggle.services.Service_Game;
 import de.dhbw.boggle.valueobjects.VO_Field_Size;
 import de.dhbw.boggle.valueobjects.VO_Word;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+
+import java.util.List;
 
 public class Game_Scene extends Boggle_Scene {
 
     private final Service_Game gameService;
     private final VO_Field_Size gridSize;
 
+    private final Entity_Player player;
+    private final Repository_Player_Guess playerGuessRepository;
+
     @FXML private Button eventButton;
     @FXML private Label textInputLabel;
     @FXML private Label timerLabel;
     @FXML private ProgressBar timerProgress;
     @FXML private Pane gamePane;
+    @FXML private ListView<Player_Guess> guessListView;
 
-    private String currentInput = "";
+    private String currentGuessInput = "";
 
     private GridPane mainGridPane;
-    private Label[][] letterLabelsGrid;
+    private final Label[][] letterLabelsGrid;
 
-    public Game_Scene(VO_Field_Size gridSize) {
+    public Game_Scene(List<Object> argList) {
+
+        validateArgList(argList);
+
+        this.player = (Entity_Player) argList.get(0);
+        this.gridSize = (VO_Field_Size) argList.get(1);
 
         CountdownService countdownService = new CountdownService();
 
-        countdownService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-            @Override
-            public void handle(WorkerStateEvent workerStateEvent) {
-                Duration currentCountdownTime = countdownService.getValue();
-
-                timerLabel.setText(
-                        Resource_Mapper_Time.durationToTimeString(currentCountdownTime)
-                );
-
-                double currentMillis = currentCountdownTime.toMillis();
-                double maxMillis = Service_Game.initialGameTime.toMillis();
-
-                timerProgress.setProgress(currentMillis / maxMillis);
-            }
+        countdownService.setOnSucceeded(workerStateEvent -> {
+            updateTime(countdownService.getValue());
         });
 
+        countdownService.setOnCancelled(workerStateEvent -> {
+            gameOver();
+        });
 
-        gameService = new Service_Game(new DWDS_Digital_Dictionary_API(), countdownService);
-        this.gridSize = gridSize;
+        playerGuessRepository = new Repository_Bridge_Player_Guess();
 
+        gameService = new Service_Game(new API_DWDS_Digital_Dictionary(), countdownService, this.playerGuessRepository);
         letterLabelsGrid = new Label[this.gridSize.getSize()][this.gridSize.getSize()];
     }
 
     @Override
     public void init() {
-        gameService.initGame("Test", gridSize);
-
+        gameService.initGame(player, gridSize);
         mainGridPane = new GridPane();
     }
 
@@ -89,12 +92,7 @@ public class Game_Scene extends Boggle_Scene {
 
             super.scene = new Scene(root, Color.web("#37474f"));
 
-            super.scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-                @Override
-                public void handle(KeyEvent keyEvent) {
-                    wordInput(keyEvent);
-                }
-            });
+            super.scene.setOnKeyPressed(this::wordInput);
 
         } catch ( Exception e ) {
             e.printStackTrace();
@@ -127,11 +125,13 @@ public class Game_Scene extends Boggle_Scene {
                 mainGridPane.add(letterLabelsGrid[i][j],i,j);
             }
         }
+
+        guessListView.setCellFactory(guessListViewCell -> new Guess_List_View_Cell());
     }
 
     @FXML
-    public void eventButtonClicked(ActionEvent event) {
-        if(!this.gameService.isStarted()) {
+    public void eventButtonClicked() {
+        if(gameService.getGameStatus() == Service_Game.GAME_STATUS.INITIALIZED) {
 
             eventButton.setVisible(false);
             eventButton.setDisable(true);
@@ -142,64 +142,107 @@ public class Game_Scene extends Boggle_Scene {
             timerProgress.setDisable(false);
 
             this.startGame();
-        } else {
-
+        } else if(gameService.getGameStatus() == Service_Game.GAME_STATUS.STOPPED) {
+            gameService.evaluatesAllGuesses();
+            updateGuessesListView();
         }
     }
 
     private void startGame() {
+        if(gameService.getGameStatus() != Service_Game.GAME_STATUS.INITIALIZED)
+            return;
+
         gameService.startGame();
 
-        Resource_Mapper_Dice_Side_Matrix diceMapper = new Resource_Mapper_Dice_Side_Matrix();
-        String dices[][] = diceMapper.map(gameService.getPlayingField());
+        Mapper_Dice_Side_Matrix diceMapper = new Mapper_Dice_Side_Matrix();
+        String[][] dices = diceMapper.apply(gameService.getPlayingField());
 
         for(int i = 0; i < gridSize.getSize(); i++) {
             for(int j = 0; j < gridSize.getSize(); j++) {
-                letterLabelsGrid[i][j].setText(dices[i][j]);;
+                letterLabelsGrid[i][j].setText(dices[i][j]);
             }
         }
     }
 
     public void gameOver() {
-        System.out.println("Game Over");
-        eventButton.setDisable(false);
+        if(gameService.getGameStatus() != Service_Game.GAME_STATUS.RUNNING)
+            return;
+
+        eventButton.setText("Auswerten!");
         eventButton.setVisible(true);
+        eventButton.setDisable(false);
+
+        timerLabel.setVisible(false);
+        timerLabel.setDisable(true);
+        timerProgress.setVisible(false);
+        timerProgress.setDisable(true);
+
+        gameService.stopGame();
     }
 
     private void wordInput(KeyEvent event) {
 
-        if(!gameService.isStarted())
+        if(gameService.getGameStatus() != Service_Game.GAME_STATUS.RUNNING)
             return;
 
         if(event.getCode().isLetterKey()) {
-            if(currentInput.length() < (gridSize.getSize() * gridSize.getSize())) {
-                currentInput = currentInput + event.getText().toUpperCase();
-                textInputLabel.setText(currentInput);
+            if(currentGuessInput.length() < (gridSize.getSize() * gridSize.getSize())) {
+                currentGuessInput = currentGuessInput + event.getText().toUpperCase();
+                textInputLabel.setText(currentGuessInput);
             }
         } else {
             switch(event.getCode()) {
                 case ENTER:
-                    if(currentInput.length() >= 3) {
-                        gameService.guessWord(new VO_Word(currentInput));
+                    if(currentGuessInput.length() >= 3) {
+                        if(gameService.guessWord(new VO_Word(currentGuessInput))) {
+                            updateGuessesListView();
+                        }
 
-                        currentInput = "";
-                        textInputLabel.setText(currentInput);
+                        currentGuessInput = "";
+                        textInputLabel.setText(currentGuessInput);
                     }
                     break;
                 case BACK_SPACE:
-                    if(currentInput.length() > 0) {
-                        currentInput = currentInput.substring(0, currentInput.length() - 1);
-                        textInputLabel.setText(currentInput);
+                    if(currentGuessInput.length() > 0) {
+                        currentGuessInput = currentGuessInput.substring(0, currentGuessInput.length() - 1);
+                        textInputLabel.setText(currentGuessInput);
                     }
                     break;
             }
         }
     }
 
-    public void  setTime(int timeInSeconds) {
-        Integer minutes = timeInSeconds / 60;
-        Integer seconds = timeInSeconds % 60;
+    private void updateGuessesListView() {
 
-        timerLabel.setText(minutes + ":" + seconds);
+        Mapper_Player_Guess_List guessListMapper = new Mapper_Player_Guess_List();
+
+        List<Player_Guess> guessList = guessListMapper.apply(
+                playerGuessRepository.getAllPlayerGuessesByPlayingFieldId(gameService.getPlayingField().getId())
+        );
+
+        guessListView.getItems().clear();
+        guessListView.getItems().addAll(guessList);
+    }
+
+    private void updateTime(Duration time) {
+        timerLabel.setText(
+                Mapper_Time.durationToTimeString(time)
+        );
+
+        double currentMillis = time.toMillis();
+        double maxMillis = Service_Game.initialGameTime.toMillis();
+
+        timerProgress.setProgress(currentMillis / maxMillis);
+    }
+
+    private void validateArgList(List<Object> argList) {
+        if(argList.size() < 2)
+            throw new RuntimeException("When creating the game scene, 2 parameters (player name, game field size) must be passed in argList!");
+
+        if(!argList.get(0).getClass().equals(Entity_Player.class))
+            throw new RuntimeException("Argument 0 must be an instance of Entity_Player");
+
+        if(!argList.get(1).getClass().equals(VO_Field_Size.class))
+            throw new RuntimeException("Argument 1 must be an instance of VO_Field_Size");
     }
 }

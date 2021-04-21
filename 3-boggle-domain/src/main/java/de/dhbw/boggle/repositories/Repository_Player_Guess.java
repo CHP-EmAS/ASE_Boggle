@@ -12,8 +12,6 @@ public interface Repository_Player_Guess {
 
     List<Entity_Player_Guess> getAllPlayerGuessesByPlayingFieldId(String playingFieldId);
 
-    List<Entity_Player_Guess> getAllPlayerGuessesByPlayerId(String playerId);
-
     List<Entity_Player_Guess> getAllUnexaminedGuessesFromGuessList(List<Entity_Player_Guess> guessList);
 
     List<Entity_Player_Guess> getAllExaminedGuessesFromGuessList(List<Entity_Player_Guess> guessList);

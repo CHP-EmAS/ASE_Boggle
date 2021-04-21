@@ -5,20 +5,20 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.dhbw.boggle.scenes.Welcome_Scene">
-   <center>
-      <AnchorPane prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="223.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@/logo.png" />
-               </image></ImageView>
-            <Button fx:id="playWithoutPoints" disable="true" layoutX="237.0" layoutY="324.0" mnemonicParsing="false" onAction="#goToMenu" text="Ohne Punkte Spielen" visible="false" />
-            <Label fx:id="apiCheckLabel" alignment="CENTER" layoutY="275.0" prefHeight="17.0" prefWidth="600.0" text="Verbindung zum Wörterbuch wird überprüft..." AnchorPane.rightAnchor="0.0">
-               <font>
-                  <Font size="21.0" />
-               </font>
-            </Label>
-         </children></AnchorPane>
-   </center>
-</BorderPane>
+<AnchorPane prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.dhbw.boggle.scenes.Welcome_Scene">
+   <children>
+      <ImageView fitHeight="223.0" fitWidth="238.0" layoutX="260.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
+         <Image url="@/logo.png" />
+      </ImageView>
+      <Button fx:id="playWithoutPoints" alignment="CENTER" disable="true" layoutX="269.0" layoutY="410.0" mnemonicParsing="false" onAction="#goToMenu" prefHeight="25.0" prefWidth="211.0" text="Ohne Punkte Spielen" visible="false">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Button>
+      <Label fx:id="apiCheckLabel" alignment="CENTER" layoutX="75.0" layoutY="340.0" prefHeight="17.0" prefWidth="600.0" text="Verbindung zum Wörterbuch wird überprüft..." AnchorPane.rightAnchor="75.0">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

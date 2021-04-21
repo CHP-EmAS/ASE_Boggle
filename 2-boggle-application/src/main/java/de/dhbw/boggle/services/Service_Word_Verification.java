@@ -5,10 +5,8 @@ import de.dhbw.boggle.domain_services.Domain_Service_Duden_Check;
 import de.dhbw.boggle.domain_services.Domain_Service_Points_Calculation;
 import de.dhbw.boggle.domain_services.Domain_Service_Word_Verification;
 import de.dhbw.boggle.entities.Entity_Letter_Salad;
-import de.dhbw.boggle.entities.Entity_Player;
 import de.dhbw.boggle.entities.Entity_Player_Guess;
 import de.dhbw.boggle.repositories.Repository_Player_Guess;
-import de.dhbw.boggle.repositories.Repository_Playing_Field;
 import de.dhbw.boggle.valueobjects.*;
 
 import java.util.ArrayList;
@@ -77,18 +75,31 @@ public class Service_Word_Verification implements Domain_Service_Word_Verificati
         for(Entity_Player_Guess playerGuess : playerGuesses) {
             VO_Word guessedWord = playerGuess.getWord();
 
-            if(checkIfWordIsBuildableWithLetterSalad( guessedWord, playingField.getLetterSalad() )) {
+            System.out.println("Examine Word " + guessedWord.getWord());
+
+            //Check if guessed word is possible with the help of the letter salad.
+            //returns null if not and a boolean matrix, where the used letter are marked with true
+            boolean[][] wordMatrix = findUsedLettersInLetterSalad( guessedWord, playingField.getLetterSalad());
+
+            if( wordMatrix != null ) {
+
+                List<VO_Matrix_Index_Pair> usedLetterList = convertBooleanMatrixToIndexPairList(wordMatrix, playingField.getPlayingFieldSize().getSize());
+
                 if(dudenCheckService.lookUpWordInDuden(guessedWord)) {
-                    playerGuess.setCorrect(calculatePointsForWord( guessedWord ));
+                    playerGuess.setCorrect(calculatePointsForWord( guessedWord), usedLetterList);
                     continue;
+                } else {
+                    playerGuess.setWrong(usedLetterList);
                 }
+            } else {
+                playerGuess.setImpossible();
+                System.out.println("Word "  + guessedWord.getWord() + " not buildable with letter salad!");
             }
 
-            playerGuess.setWrong();
         }
     }
 
-    private boolean checkIfWordIsBuildableWithLetterSalad(VO_Word word, Entity_Letter_Salad letterSalad) {
+    private boolean[][] findUsedLettersInLetterSalad(VO_Word word, Entity_Letter_Salad letterSalad) {
 
         String str_word = word.getWord();
 
@@ -99,25 +110,29 @@ public class Service_Word_Verification implements Domain_Service_Word_Verificati
         List<VO_Matrix_Index_Pair> startingPositions = getAllIndexPairsForALetterInDiceMatrix(diceSideMatrix, matrixSize, str_word.charAt(0));
 
         if(startingPositions.size() <= 0)
-            return false;
+            return null;
 
-        boolean wordIsPossible = false;
+        boolean[][] correctUseMatrix = null;
 
         for(VO_Matrix_Index_Pair startPosition : startingPositions) {
 
             //This array marks the already used letters of the matrix, because a letter may not be used twice
             boolean[][] letterUseMatrix = new boolean[matrixSize][matrixSize];
-            Arrays.fill(letterUseMatrix, false);
+
+            for (boolean[] row: letterUseMatrix)
+                Arrays.fill(row, false);
 
             //Set first letter to used
             letterUseMatrix[startPosition.getI()][startPosition.getJ()] = true;
 
-            if(checkIfWordIsPossibleFromGivenStartingPoint(str_word.substring(1), startPosition, diceSideMatrix, matrixSize, letterUseMatrix)) {
-                wordIsPossible = true;
+            boolean[][] checkedBranchMatrix = checkIfWordIsPossibleFromGivenStartingPoint(str_word.substring(1), startPosition, diceSideMatrix, matrixSize, letterUseMatrix);
+
+            if(checkedBranchMatrix != null) {
+                correctUseMatrix = checkedBranchMatrix;
             }
         };
 
-        return false;
+        return correctUseMatrix;
     }
 
     private List<VO_Matrix_Index_Pair> getAllIndexPairsForALetterInDiceMatrix(VO_Dice_Side[][] diceMatrix, int matrixSize, char searchLetter) {
@@ -135,29 +150,35 @@ public class Service_Word_Verification implements Domain_Service_Word_Verificati
         return indexPairList;
     };
 
-    private boolean checkIfWordIsPossibleFromGivenStartingPoint(String remainingWord, VO_Matrix_Index_Pair startingPoint, VO_Dice_Side[][] diceSideMatrix, int matrixSize, boolean[][] letterUseMatrix) {
+    private boolean[][] checkIfWordIsPossibleFromGivenStartingPoint(String remainingWord, VO_Matrix_Index_Pair startingPoint, VO_Dice_Side[][] diceSideMatrix, int matrixSize, boolean[][] letterUseMatrix) {
 
         //If there are no letters left in the word, the word can be created correctly using the given letter matrix.
         if(remainingWord.length() == 0)
-            return true;
+            return letterUseMatrix;
 
         char firstLetter = remainingWord.charAt(0);
         String remainingString = remainingWord.substring(1);
 
         List<VO_Matrix_Index_Pair> foundPositions = new ArrayList<>();
 
-        //go through all adjacent letters if possible und check if the letters are equal
+        //go through all adjacent letters if possible and check if the letters are equal
         for(int dI = -1; dI < 2; dI++) {
+
+            int newI = startingPoint.getI() + dI;
+
+            //continue if new index i is out of bound
+            if(newI < 0 || newI >= matrixSize)
+                continue;
+
             for(int dJ = -1; dJ < 2; dJ++) {
 
                 //continue if index pair is on startingPoint
                 if(dI == 0 && dJ == 0) continue;
 
-                int newI = startingPoint.getI() + dI;
                 int newJ = startingPoint.getJ() + dJ;
 
-                //continue if index pair out of bound
-                if(newI < 0 || newI >= matrixSize || newJ <0 ||newJ >= matrixSize)
+                //continue if index j is out of bound
+                if(newJ <0 ||newJ >= matrixSize)
                     continue;
 
                 //Add index pair to list if letter is the searched one and this letter was not used before
@@ -171,17 +192,38 @@ public class Service_Word_Verification implements Domain_Service_Word_Verificati
 
         //Word not possible for this branch, because letter was not found in the adjacent dices
         if(foundPositions.size() == 0)
-            return false;
+            return null;
 
-        boolean wordCorrect = false;
+        boolean[][] correctUseMatrix = null;
 
         //start from each new starting point and check if the remaining word can be created with the help of a recursive loop
         for(VO_Matrix_Index_Pair newStartPosition : foundPositions) {
-            if(checkIfWordIsPossibleFromGivenStartingPoint(remainingString, newStartPosition, diceSideMatrix, matrixSize, letterUseMatrix)){
-                wordCorrect = true;
+            boolean[][] checkedBranchMatrix = checkIfWordIsPossibleFromGivenStartingPoint(remainingString, newStartPosition, diceSideMatrix, matrixSize, letterUseMatrix);
+
+            if(checkedBranchMatrix != null) {
+                correctUseMatrix = checkedBranchMatrix;
             }
         }
 
-        return wordCorrect;
+        return correctUseMatrix;
+    }
+
+    private List<VO_Matrix_Index_Pair> convertBooleanMatrixToIndexPairList(boolean[][] booleanMatrix, short matrixSize) {
+
+        System.out.println(booleanMatrix.length);
+
+        List<VO_Matrix_Index_Pair> indexPairList = new ArrayList<>();
+
+        for(int i = 0; i < matrixSize; i++) {
+            for(int j = 0; j < matrixSize; j++) {
+
+                if(booleanMatrix[i][j]) {
+                    indexPairList.add(new VO_Matrix_Index_Pair(i,j));
+                }
+
+            }
+        }
+
+        return indexPairList;
     }
 }

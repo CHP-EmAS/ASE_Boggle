@@ -1,15 +1,17 @@
 package de.dhbw.boggle.entities;
 
 import de.dhbw.boggle.aggregates.Aggregate_Playing_Field;
+import de.dhbw.boggle.valueobjects.VO_Matrix_Index_Pair;
 import de.dhbw.boggle.valueobjects.VO_Points;
 import de.dhbw.boggle.valueobjects.VO_Word;
 
-import java.util.Objects;
+import java.util.*;
 
 public class Entity_Player_Guess {
 
     public enum Guess_Flag{
         NOT_EXAMINED,
+        EXAMINED_IMPOSSIBLE,
         EXAMINED_WRONG,
         EXAMINED_CORRECT
     }
@@ -17,36 +19,50 @@ public class Entity_Player_Guess {
     private final long id;
     private static long idCounter;
 
-    private final VO_Word word;
     private final Aggregate_Playing_Field assignedPlayingField;
-    private final Entity_Player assignedPlayer;
+
+    private final VO_Word word;
 
     private VO_Points calculatedPoints;
     private Guess_Flag guessFlag;
+    private List<VO_Matrix_Index_Pair> usedLetterList;
 
-    public Entity_Player_Guess(VO_Word word, Aggregate_Playing_Field assignedPlayingField, Entity_Player assignedPlayer) {
+    public Entity_Player_Guess(VO_Word word, Aggregate_Playing_Field assignedPlayingField) {
+        this.word = word;
 
         this.assignedPlayingField = assignedPlayingField;
-        this.assignedPlayer = assignedPlayer;
-        this.word = word;
 
         guessFlag = Guess_Flag.NOT_EXAMINED;
         this.id = idCounter++;
     }
 
-    public void setCorrect(VO_Points points) {
+    public void setCorrect(VO_Points points, List<VO_Matrix_Index_Pair> usedLetterList) {
         if(guessFlag != Guess_Flag.NOT_EXAMINED)
             throw new RuntimeException("Guesses that have already been examined cannot be examined again!");
 
         guessFlag = Guess_Flag.EXAMINED_CORRECT;
+        this.usedLetterList = usedLetterList;
+
         calculatedPoints = points;
     }
 
-    public void setWrong() {
+    public void setWrong(List<VO_Matrix_Index_Pair> usedLetterList) {
         if(guessFlag != Guess_Flag.NOT_EXAMINED)
             throw new RuntimeException("Guesses that have already been examined cannot be examined again!");
 
         guessFlag = Guess_Flag.EXAMINED_WRONG;
+        this.usedLetterList = usedLetterList;
+
+        calculatedPoints = new VO_Points(0);
+    }
+
+    public void setImpossible() {
+        if(guessFlag != Guess_Flag.NOT_EXAMINED)
+            throw new RuntimeException("Guesses that have already been examined cannot be examined again!");
+
+        guessFlag = Guess_Flag.EXAMINED_IMPOSSIBLE;
+        this.usedLetterList = new ArrayList<>();
+
         calculatedPoints = new VO_Points(0);
     }
 
@@ -57,16 +73,19 @@ public class Entity_Player_Guess {
         return calculatedPoints;
     }
 
-    public Guess_Flag getGuessFlag() {
-        return guessFlag;
+    public List<VO_Matrix_Index_Pair> getUsedLetterList() {
+        if(guessFlag == Guess_Flag.NOT_EXAMINED)
+            throw new RuntimeException("Points of a player Guess were requested, but they were not calculated yet!");
+
+        return List.copyOf(this.usedLetterList);
     }
 
     public Aggregate_Playing_Field getAssignedPlayingField() {
-        return this.assignedPlayingField;
+        return assignedPlayingField;
     }
 
-    public Entity_Player getAssignedPlayer() {
-        return this.assignedPlayer;
+    public Guess_Flag getGuessFlag() {
+        return guessFlag;
     }
 
     public VO_Word getWord() {

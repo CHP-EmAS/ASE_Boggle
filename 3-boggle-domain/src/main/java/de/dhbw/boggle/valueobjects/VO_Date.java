@@ -1,6 +1,5 @@
 package de.dhbw.boggle.valueobjects;
 
-import java.time.Instant;
 import java.time.LocalDate;
 
 public final class VO_Date {
@@ -17,7 +16,7 @@ public final class VO_Date {
     }
 
     public VO_Date(String stringDate) {
-        String[] dateParts = stringDate.split(".");
+        String[] dateParts = stringDate.split("\\.");
 
         if(dateParts.length != 3) {
             throw new IllegalArgumentException("Given date in string format is not valid! Valid format: dd.MM.YYYY");
@@ -34,10 +33,8 @@ public final class VO_Date {
         return day.toString() + "." + month.toString() + "." + year.toString();
     }
 
-    private boolean isValid(int day, int month, int year) {
+    private void isValid(int day, int month, int year) {
         //Throws exception if wrong date
         LocalDate.of(year,month, day);
-
-        return true;
     }
 }

@@ -1,15 +1,15 @@
-package de.dhbw.boggle;
+package de.dhbw.boggle.time;
 
 import java.time.Duration;
 
-public class Resource_Mapper_Time {
+public class Mapper_Time {
     public static String durationToTimeString(javafx.util.Duration time) {
 
-        Integer minutes = ((int)time.toSeconds() / 60);
-        Integer seconds = ((int)time.toSeconds() % 60);
+        int minutes = ((int)time.toSeconds() / 60);
+        int seconds = ((int)time.toSeconds() % 60);
 
-        String str_minutes = minutes.toString();
-        String str_seconds = seconds.toString();
+        String str_minutes = Integer.toString(minutes);
+        String str_seconds = Integer.toString(seconds);
 
         if(minutes < 10)
             str_minutes = "0" + str_minutes;

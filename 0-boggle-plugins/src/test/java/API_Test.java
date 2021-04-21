@@ -1,4 +1,4 @@
-import de.dhbw.boggle.DWDS_Digital_Dictionary_API;
+import de.dhbw.boggle.API_DWDS_Digital_Dictionary;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -9,11 +9,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import de.dhbw.boggle.valueobjects.VO_Word;
 
 public class API_Test {
-    private DWDS_Digital_Dictionary_API api;
+    private API_DWDS_Digital_Dictionary api;
 
     @BeforeEach
     public void setUp() {
-        api = new DWDS_Digital_Dictionary_API();
+        api = new API_DWDS_Digital_Dictionary();
     }
 
     @Test

@@ -9,14 +9,10 @@ import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
-import java.net.http.HttpRequest;
-import java.util.Locale;
 import java.util.Scanner;
 
-public class DWDS_Digital_Dictionary_API implements Domain_Service_Duden_Check {
+public class API_DWDS_Digital_Dictionary implements Domain_Service_Duden_Check {
 
     private static boolean checkedIfAPIIsAvailable = false;
     private static boolean apiAvailable = false;
@@ -27,6 +23,10 @@ public class DWDS_Digital_Dictionary_API implements Domain_Service_Duden_Check {
         if(checkedIfAPIIsAvailable)
             return apiAvailable;
 
+        checkedIfAPIIsAvailable = true;
+        apiAvailable = true;
+
+        /*
         try {
             URL url = new URL("https://www.dwds.de/api/wb/snippet/?q=Test");
 
@@ -37,15 +37,13 @@ public class DWDS_Digital_Dictionary_API implements Domain_Service_Duden_Check {
             apiAvailable = (conn.getResponseCode() == 200);
             checkedIfAPIIsAvailable = true;
 
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        */
 
         return apiAvailable;
+
     }
 
     @Override
@@ -96,17 +94,13 @@ public class DWDS_Digital_Dictionary_API implements Domain_Service_Duden_Check {
 
                 JSONObject wordDefinition = (JSONObject) wordArray.get(0);
 
-                System.out.println("Word found! lemma: " + wordDefinition.get("lemma").toString() + ", type: " + wordDefinition.get("wortart").toString());
+                String wordType = wordDefinition.get("wortart") == null ? "---" : wordDefinition.get("wortart").toString();
+
+                System.out.println("Word found! lemma: " + wordDefinition.get("lemma").toString() + ", type: " + wordType);
                 return true;
 
             }
-        } catch (ProtocolException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
 

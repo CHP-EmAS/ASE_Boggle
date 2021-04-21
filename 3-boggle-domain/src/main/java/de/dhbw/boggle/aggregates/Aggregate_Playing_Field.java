@@ -2,7 +2,6 @@ package de.dhbw.boggle.aggregates;
 
 import de.dhbw.boggle.entities.Entity_Player;
 import de.dhbw.boggle.valueobjects.VO_Dice;
-import de.dhbw.boggle.valueobjects.VO_Dice_Side;
 import de.dhbw.boggle.valueobjects.VO_Field_Size;
 import de.dhbw.boggle.entities.Entity_Letter_Salad;
 
@@ -17,20 +16,17 @@ public class Aggregate_Playing_Field {
     private final Entity_Letter_Salad letterSalad;
     private final Entity_Player assignedPlayer;
 
-    private VO_Dice[] dices;
-
     public Aggregate_Playing_Field(VO_Dice[] dices, VO_Field_Size playingFieldSize, Entity_Player assignedPlayer) {
         if(dices.length != (playingFieldSize.getSize() * playingFieldSize.getSize())) {
             throw new IllegalArgumentException("Number of dices must correspond to the number of field elements of the playing Field! There were passed " + dices.length + " dices to a " + playingFieldSize.getSize() + "x" + playingFieldSize.getSize() + " playing field.");
         }
 
-        this.dices = dices;
         this.playingFieldSize = playingFieldSize;
 
         this.assignedPlayer = assignedPlayer;
 
         this.letterSalad = new Entity_Letter_Salad(this.playingFieldSize);
-        this.letterSalad.throwTheDices(this.dices);
+        this.letterSalad.throwTheDices(dices);
 
         this.uuid = UUID.randomUUID().toString();
     }

@@ -8,8 +8,8 @@ public abstract class Boggle_Scene {
     protected Scene scene;
 
     public void setSceneManager(Scene_Manager sceneManager) {
-        if(this.sceneManager == null)
-            this.sceneManager = sceneManager;
+        if(Boggle_Scene.sceneManager == null)
+            Boggle_Scene.sceneManager = sceneManager;
     }
 
     abstract public void init();
@@ -17,5 +17,5 @@ public abstract class Boggle_Scene {
 
     public javafx.scene.Scene getScene() {
         return this.scene;
-    };
+    }
 }

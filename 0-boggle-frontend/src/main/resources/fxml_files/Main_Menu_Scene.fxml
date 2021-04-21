@@ -2,9 +2,42 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.dhbw.boggle.scenes.Main_Menu_Scene">
+<AnchorPane prefHeight="500.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="buttonTest" layoutX="274.0" layoutY="188.0" mnemonicParsing="false" onAction="#changeText" text="Start" />
+      <Pane layoutX="106.0" layoutY="75.0" prefHeight="105.0" prefWidth="538.0">
+         <children>
+         <Label fx:id="playerNameLabel" alignment="CENTER" disable="true" layoutY="30.0" prefHeight="28.0" prefWidth="539.0" text="Tippe deinen Namen ein...">
+            <font>
+               <Font name="Calibri Bold" size="40.0" />
+            </font>
+         </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="211.0" layoutY="215.0" prefHeight="228.0" prefWidth="328.0">
+         <children>
+            <Button fx:id="boggle4Button" disable="true" mnemonicParsing="false" onAction="#startGame4" prefHeight="38.0" prefWidth="328.0" text="4er Boggel starten!">
+               <font>
+                  <Font name="Calibri Bold" size="24.0" />
+               </font>
+            </Button>
+            <Button fx:id="boggle5Button" disable="true" layoutY="59.0" mnemonicParsing="false" onAction="#startGame5" prefHeight="38.0" prefWidth="328.0" text="5er Boggel starten!">
+               <font>
+                  <Font name="Calibri Bold" size="24.0" />
+               </font>
+            </Button>
+            <Button layoutY="114.0" mnemonicParsing="false" onAction="#goToRanking" prefHeight="38.0" prefWidth="328.0" text="Rangliste">
+               <font>
+                  <Font name="Calibri Bold" size="24.0" />
+               </font>
+            </Button>
+            <Button layoutY="170.0" mnemonicParsing="false" onAction="#goToCredits" prefHeight="38.0" prefWidth="328.0" text="Spielanleitung &amp; Credits">
+               <font>
+                  <Font name="Calibri Bold" size="24.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

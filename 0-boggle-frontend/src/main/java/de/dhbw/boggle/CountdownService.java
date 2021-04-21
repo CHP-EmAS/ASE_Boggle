@@ -1,6 +1,7 @@
 package de.dhbw.boggle;
 
 import de.dhbw.boggle.domain_services.Domain_Service_Timer;
+import de.dhbw.boggle.time.Mapper_Time;
 import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Task;
 import javafx.util.Duration;
@@ -17,7 +18,7 @@ public class CountdownService extends ScheduledService<Duration> implements Doma
         if(isRunning)
             throw new RuntimeException("A running Timer cannot be started again! Try to cancel the timer first.");
 
-        counterDuration = Resource_Mapper_Time.convert(countdownDuration);
+        counterDuration = Mapper_Time.convert(countdownDuration);
         isRunning = true;
 
         this.setDelay(tickerSpeed);
@@ -28,15 +29,21 @@ public class CountdownService extends ScheduledService<Duration> implements Doma
 
     @Override
     public void cancelTimer() {
-        this.cancel();
+        if(this.isRunning())
+            this.cancel();
+
         isRunning = false;
     }
 
     @Override
     protected Task<Duration> createTask() {
-        return new Task<Duration>() {
+        return new Task<>() {
             @Override
-            protected Duration call() throws Exception {
+            protected Duration call() {
+
+                if(counterDuration.toMillis() <= 0) {
+                    this.cancel();
+                }
 
                 counterDuration = counterDuration.subtract(tickerSpeed);
                 return counterDuration;

@@ -1,6 +1,8 @@
 package de.dhbw.boggle;
 
 import de.dhbw.boggle.entities.Entity_Ranking_Entry;
+import de.dhbw.boggle.ranking_entry.Ranking_Entry;
+import de.dhbw.boggle.ranking_entry.Ranking_Entry_Mapper;
 import de.dhbw.boggle.repositories.Repository_Ranking;
 
 import java.io.File;
@@ -24,7 +26,7 @@ public class Repository_Bridge_Ranking implements Repository_Ranking {
     private final String rankingFileName = "ranks.txt";
     private boolean rankingFileIsLoaded = false;
 
-    private Ranking_Entry_Resource_Mapper rankingEntryMapper = new Ranking_Entry_Resource_Mapper();
+    private Ranking_Entry_Mapper rankingEntryMapper = new Ranking_Entry_Mapper();
 
     private final List<Entity_Ranking_Entry> rankingEntries = new ArrayList<>();
 
@@ -60,7 +62,7 @@ public class Repository_Bridge_Ranking implements Repository_Ranking {
         JSONArray rankingListJSONArray = new JSONArray();
 
         rankingEntries.forEach(ranking_entry -> {
-            Resource_Ranking_Entry newEntry = rankingEntryMapper.map(ranking_entry);
+            Ranking_Entry newEntry = rankingEntryMapper.apply(ranking_entry);
 
             JSONObject rankingEntryJSONObject = new JSONObject();
             rankingEntryJSONObject.put("rankingEntry", newEntry);

@@ -3,6 +3,8 @@ package de.dhbw.boggle.services;
 import de.dhbw.boggle.valueobjects.VO_Dice;
 import de.dhbw.boggle.valueobjects.VO_Field_Size;
 
+import java.util.Arrays;
+
 public class Service_Dice_Builder {
     public VO_Dice[] buildDiceArray(VO_Field_Size playingFieldSize) {
 
@@ -40,7 +42,17 @@ public class Service_Dice_Builder {
     }
 
     private VO_Dice[] generate5x5Dices() {
-        VO_Dice[] generatedDices = new VO_Dice[25];
+        VO_Dice[] generatedDices =  Arrays.copyOf(generate4x4Dices(),25);
+
+        generatedDices[16] =  new VO_Dice("PAIBTN");
+        generatedDices[17] =  new VO_Dice("SHLUDE");
+        generatedDices[18] =  new VO_Dice("MRECZA");
+        generatedDices[19] =  new VO_Dice("VJIEGR");
+        generatedDices[20] =  new VO_Dice("TNZDEL");
+        generatedDices[21] =  new VO_Dice("LOWUIE");
+        generatedDices[22] =  new VO_Dice("MIRTAK");
+        generatedDices[23] =  new VO_Dice("FONUAS");
+        generatedDices[24] =  new VO_Dice("AISEEO");
 
         return generatedDices;
     }

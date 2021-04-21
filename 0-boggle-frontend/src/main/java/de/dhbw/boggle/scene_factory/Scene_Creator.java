@@ -3,6 +3,8 @@ package de.dhbw.boggle.scene_factory;
 import de.dhbw.boggle.Scene_Manager;
 import de.dhbw.boggle.scenes.Boggle_Scene;
 
+import java.util.List;
+
 public abstract class Scene_Creator {
 
     public enum SCENE {
@@ -14,8 +16,8 @@ public abstract class Scene_Creator {
         CREDITS_SCENE
     }
 
-    public Boggle_Scene getScene(SCENE sceneName, Scene_Manager sceneManager) {
-        Boggle_Scene newScene = createBoggleScene(sceneName);
+    public Boggle_Scene getScene(SCENE sceneName, Scene_Manager sceneManager, List<Object> argList) {
+        Boggle_Scene newScene = createBoggleScene(sceneName, argList);
 
         newScene.setSceneManager(sceneManager);
 
@@ -25,6 +27,17 @@ public abstract class Scene_Creator {
         return newScene;
     }
 
-    protected abstract Boggle_Scene createBoggleScene(SCENE sceneName);
+    public Boggle_Scene getScene(SCENE sceneName, Scene_Manager sceneManager) {
+        Boggle_Scene newScene = createBoggleScene(sceneName, null );
+
+        newScene.setSceneManager(sceneManager);
+
+        newScene.init();
+        newScene.build();
+
+        return newScene;
+    }
+
+    protected abstract Boggle_Scene createBoggleScene(SCENE sceneName, List<Object> argList);
 
 }

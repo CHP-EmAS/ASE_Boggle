@@ -1,5 +1,6 @@
 package de.dhbw.boggle.entities;
 
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -9,7 +10,14 @@ public class Entity_Player {
 
     private final String name;
 
+    public final static short minPlayerNameLength = 1; //included
+    public final static short maxPlayerNameLength = 20; //included
+
     public Entity_Player(String name) {
+        if(!isValid(name))
+            throw new IllegalArgumentException("Name '" + name + "' is invalid for a player name! The name must be at least " + minPlayerNameLength + " and no more than " + maxPlayerNameLength + " letters long.");
+
+
         this.name = name;
         this.uuid = UUID.randomUUID().toString();
     }
@@ -20,6 +28,10 @@ public class Entity_Player {
 
     public String getId() {
         return this.uuid;
+    }
+
+    private boolean isValid(String name) {
+        return (name.length() >= minPlayerNameLength && name.length() <= maxPlayerNameLength);
     }
 
     @Override

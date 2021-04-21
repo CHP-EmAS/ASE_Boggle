@@ -24,8 +24,8 @@
                 <version>3.1</version>
                 <configuration>
                     <debug>true</debug>
-                    <source>9</source>
-                    <target>9</target>
+                    <source>16</source>
+                    <target>16</target>
                 </configuration>
             </plugin>
             <plugin>

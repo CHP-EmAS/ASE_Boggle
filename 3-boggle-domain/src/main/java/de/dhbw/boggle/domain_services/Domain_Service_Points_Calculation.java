@@ -1,7 +1,6 @@
 package de.dhbw.boggle.domain_services;
 
 import de.dhbw.boggle.aggregates.Aggregate_Playing_Field;
-import de.dhbw.boggle.entities.Entity_Player;
 import de.dhbw.boggle.valueobjects.VO_Points;
 import de.dhbw.boggle.valueobjects.VO_Word;
 

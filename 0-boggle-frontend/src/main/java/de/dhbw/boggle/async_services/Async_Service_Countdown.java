@@ -1,4 +1,4 @@
-package de.dhbw.boggle;
+package de.dhbw.boggle.async_services;
 
 import de.dhbw.boggle.domain_services.Domain_Service_Timer;
 import de.dhbw.boggle.time.Mapper_Time;
@@ -6,7 +6,7 @@ import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Task;
 import javafx.util.Duration;
 
-public class CountdownService extends ScheduledService<Duration> implements Domain_Service_Timer {
+public class Async_Service_Countdown extends ScheduledService<Duration> implements Domain_Service_Timer {
 
     private Duration counterDuration;
     private boolean isRunning = false;

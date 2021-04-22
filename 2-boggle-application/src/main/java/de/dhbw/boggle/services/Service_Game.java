@@ -1,17 +1,14 @@
 package de.dhbw.boggle.services;
 
 import de.dhbw.boggle.aggregates.Aggregate_Playing_Field;
-import de.dhbw.boggle.domain_services.Domain_Service_Duden_Check;
-import de.dhbw.boggle.domain_services.Domain_Service_Game;
-import de.dhbw.boggle.domain_services.Domain_Service_Timer;
-import de.dhbw.boggle.domain_services.Domain_Service_Word_Verification;
+import de.dhbw.boggle.domain_services.*;
 import de.dhbw.boggle.entities.Entity_Player;
 import de.dhbw.boggle.entities.Entity_Player_Guess;
 import de.dhbw.boggle.repositories.Repository_Player_Guess;
 import de.dhbw.boggle.repositories.Repository_Playing_Field;
-import de.dhbw.boggle.repository_bridges.Repository_Bridge_Player_Guess;
 import de.dhbw.boggle.repository_bridges.Repository_Bridge_Playing_Field;
 import de.dhbw.boggle.valueobjects.VO_Field_Size;
+import de.dhbw.boggle.valueobjects.VO_Points;
 import de.dhbw.boggle.valueobjects.VO_Word;
 
 import java.time.Duration;
@@ -28,6 +25,7 @@ public class Service_Game implements Domain_Service_Game {
     }
 
     private final Domain_Service_Word_Verification wordVerificationService;
+    private final Domain_Service_Points_Calculation pointsCalculationService;
 
     private final Repository_Player_Guess playerGuessRepository;
     private final Repository_Playing_Field playingFieldRepository;
@@ -38,11 +36,15 @@ public class Service_Game implements Domain_Service_Game {
     public final static java.time.Duration initialGameTime = Duration.ofMinutes(3);
     private final Domain_Service_Timer gameTimer;
 
+    private VO_Points totalScore;
+
     public Service_Game(Domain_Service_Duden_Check dudenCheckService,Domain_Service_Timer gameTimer, Repository_Player_Guess playerGuessRepository) {
         this.playingFieldRepository = new Repository_Bridge_Playing_Field();
         this.playerGuessRepository = playerGuessRepository;
 
-        wordVerificationService = new Service_Word_Verification(this.playerGuessRepository, dudenCheckService);
+        Service_Word_Verification wordService = new Service_Word_Verification(this.playerGuessRepository, dudenCheckService);
+        wordVerificationService = wordService;
+        pointsCalculationService = wordService;
 
         this.gameTimer = gameTimer;
     }
@@ -111,6 +113,14 @@ public class Service_Game implements Domain_Service_Game {
     }
 
     @Override
+    public VO_Points getTotalScore() {
+        if(gameStatus != GAME_STATUS.EVALUATED)
+            throw new RuntimeException("Game has not been evaluated yet");
+
+        return totalScore;
+    }
+
+    @Override
     public boolean guessWord(VO_Word newWord) {
         if(gameStatus != GAME_STATUS.RUNNING)
             throw new RuntimeException("Guesses are only possible when the game is running!");
@@ -131,6 +141,9 @@ public class Service_Game implements Domain_Service_Game {
             throw new RuntimeException("Guesses can only be evaluated when the game is stopped!");
 
         wordVerificationService.examineAllGuesses(this.getPlayingField());
+        totalScore = pointsCalculationService.sumUpPoints(this.getPlayingField());
+
+        gameStatus = GAME_STATUS.EVALUATED;
     }
 
     public GAME_STATUS getGameStatus() {

@@ -49,7 +49,7 @@ public class Entity_Letter_Salad {
 
 
 
-        LinkedList<VO_Dice> diceList = new LinkedList(Arrays.asList(Arrays.copyOf(dices, dices.length)));
+        LinkedList<VO_Dice> diceList = new LinkedList<>(Arrays.asList(Arrays.copyOf(dices, dices.length)));
 
         for(int i = 0; i < this.fieldSize.getSize(); i++) {
             for(int j = 0; j < this.fieldSize.getSize(); j++) {

@@ -1,4 +1,5 @@
 # Default ignored files
 ./*.iml
 ./*/target/
-./.idea/
+/.idea
+/ranks.json

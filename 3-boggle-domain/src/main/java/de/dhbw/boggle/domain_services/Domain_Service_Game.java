@@ -2,8 +2,8 @@ package de.dhbw.boggle.domain_services;
 
 import de.dhbw.boggle.aggregates.Aggregate_Playing_Field;
 import de.dhbw.boggle.entities.Entity_Player;
-import de.dhbw.boggle.repositories.Repository_Player_Guess;
 import de.dhbw.boggle.valueobjects.VO_Field_Size;
+import de.dhbw.boggle.valueobjects.VO_Points;
 import de.dhbw.boggle.valueobjects.VO_Word;
 
 public interface Domain_Service_Game {
@@ -16,6 +16,8 @@ public interface Domain_Service_Game {
 
     Entity_Player getPlayer();
     Aggregate_Playing_Field getPlayingField();
+
+    VO_Points getTotalScore();
 
     boolean guessWord(VO_Word newWord);
     void evaluatesAllGuesses();

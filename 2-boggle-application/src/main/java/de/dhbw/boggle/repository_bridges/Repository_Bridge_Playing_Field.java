@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Repository_Bridge_Playing_Field implements Repository_Playing_Field {
 
-    private final List<Aggregate_Playing_Field> playingFields = new ArrayList<Aggregate_Playing_Field>();
+    private final List<Aggregate_Playing_Field> playingFields = new ArrayList<>();
 
     @Override
     public void addPlayingField(Aggregate_Playing_Field playingField) {

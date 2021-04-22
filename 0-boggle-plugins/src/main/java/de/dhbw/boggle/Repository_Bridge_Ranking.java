@@ -11,7 +11,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import de.dhbw.boggle.valueobjects.VO_Date;
 import de.dhbw.boggle.valueobjects.VO_Field_Size;
@@ -23,17 +25,17 @@ import org.json.simple.parser.ParseException;
 
 public class Repository_Bridge_Ranking implements Repository_Ranking {
 
-    private final String rankingFileName = "ranks.txt";
+    private final String rankingFileName = "ranks.json";
     private boolean rankingFileIsLoaded = false;
 
-    private Ranking_Entry_Mapper rankingEntryMapper = new Ranking_Entry_Mapper();
+    private final Ranking_Entry_Mapper rankingEntryMapper = new Ranking_Entry_Mapper();
 
     private final List<Entity_Ranking_Entry> rankingEntries = new ArrayList<>();
 
     @Override
     public void addRankingEntry(Entity_Ranking_Entry rankingEntry) {
         if(!rankingFileIsLoaded)
-            loadRankingEntriesFromFile(rankingFileName);
+            throw new RuntimeException("Ranking entries are not loaded! Please load them first!");
 
         rankingEntries.add(rankingEntry);
 
@@ -43,18 +45,30 @@ public class Repository_Bridge_Ranking implements Repository_Ranking {
     @Override
     public Entity_Ranking_Entry getRankingEntryByID(String uuid) {
         if(!rankingFileIsLoaded)
-            loadRankingEntriesFromFile(rankingFileName);
+            throw new RuntimeException("Ranking entries are not loaded! Please load them first!");
 
         return rankingEntries.stream().filter(rankingEntry -> rankingEntry.getId().equals(uuid))
                 .findFirst().orElse(null);
     }
 
     @Override
-    public List<Entity_Ranking_Entry> getAllRankingEntries() {
+    public List<Entity_Ranking_Entry> getRankingByFieldSize(VO_Field_Size fieldSize) {
         if(!rankingFileIsLoaded)
-            loadRankingEntriesFromFile(rankingFileName);
+            throw new RuntimeException("Ranking entries are not loaded! Please load them first!");
 
-        return rankingEntries;
+        return rankingEntries.stream()
+                .filter(rankingEntry -> rankingEntry.getFieldSize().equals(fieldSize))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean loadAllRankingEntries() {
+        if(!rankingFileIsLoaded) {
+            rankingFileIsLoaded = true;
+            return loadRankingEntriesFromFile(rankingFileName);
+        }
+
+        return true;
     }
 
     private void saveRankingEntriesToFile(String fileName)  {
@@ -64,13 +78,10 @@ public class Repository_Bridge_Ranking implements Repository_Ranking {
         rankingEntries.forEach(ranking_entry -> {
             Ranking_Entry newEntry = rankingEntryMapper.apply(ranking_entry);
 
-            JSONObject rankingEntryJSONObject = new JSONObject();
-            rankingEntryJSONObject.put("rankingEntry", newEntry);
-
-            rankingListJSONArray.add(rankingEntryJSONObject);
+            rankingListJSONArray.add(newEntry.toJson());
         });
 
-        try (FileWriter file = new FileWriter("employees.json")) {
+        try (FileWriter file = new FileWriter(fileName)) {
 
             file.write(rankingListJSONArray.toJSONString());
             file.flush();
@@ -80,7 +91,7 @@ public class Repository_Bridge_Ranking implements Repository_Ranking {
         }
     }
 
-    private void loadRankingEntriesFromFile(String fileName)  {
+    private boolean loadRankingEntriesFromFile(String fileName)  {
 
         JSONParser jsonParser = new JSONParser();
 
@@ -100,10 +111,11 @@ public class Repository_Bridge_Ranking implements Repository_Ranking {
 
             } catch (ParseException  e) {
                 e.printStackTrace();
+                return false;
             }
         }
 
-        rankingFileIsLoaded = true;
+       return true;
     }
 
     private String readOrCreateRankingFile(String fileName) {
@@ -112,7 +124,7 @@ public class Repository_Bridge_Ranking implements Repository_Ranking {
         FileReader fileReader;
 
         int currentCharacter;
-        StringBuffer fileContent = new StringBuffer();
+        StringBuilder fileContent = new StringBuilder();
 
         try {
             file.createNewFile();
@@ -131,14 +143,13 @@ public class Repository_Bridge_Ranking implements Repository_Ranking {
     }
 
     private Entity_Ranking_Entry parseRankingEntryObject(JSONObject rankingEntry) {
-        JSONObject rankingEntryObject = (JSONObject) rankingEntry.get("rankingEntry");
 
-        String playerName = (String) rankingEntryObject.get("playerName");
-        int points = (int) rankingEntryObject.get("points");
-        short fieldSize = (short) rankingEntryObject.get("fieldSize");
-        String date = (String) rankingEntryObject.get("dateString");
+        String playerName = (String) rankingEntry.get("playerName");
+        long points = (long) rankingEntry.get("points");
+        long fieldSize = (long) rankingEntry.get("fieldSize");
+        String date = (String) rankingEntry.get("dateString");
 
-        return new Entity_Ranking_Entry(playerName, new VO_Points(points), new VO_Field_Size(fieldSize), new VO_Date(date));
+        return new Entity_Ranking_Entry(playerName, new VO_Points((int) points), new VO_Field_Size((short) fieldSize), new VO_Date(date));
     }
 
 }

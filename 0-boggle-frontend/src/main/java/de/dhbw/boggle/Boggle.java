@@ -1,5 +1,6 @@
 package de.dhbw.boggle;
 
+import de.dhbw.boggle.manager.Scene_Manager;
 import javafx.application.Application;
 
 public class Boggle {

@@ -1,4 +1,4 @@
-package de.dhbw.boggle;
+package de.dhbw.boggle.manager;
 
 import de.dhbw.boggle.scene_factory.Advanced_Scene_Factory;
 import de.dhbw.boggle.scene_factory.Scene_Creator;

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane minHeight="500.0" minWidth="750.0" prefHeight="500" prefWidth="750" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane layoutX="375.0" prefHeight="500.0" prefWidth="375.0">
+         <children>
+            <ListView fx:id="rankingList5" fixedCellSize="50.0" layoutY="59.0" prefHeight="441.0" prefWidth="375.0" visible="false" />
+            <Label alignment="CENTER" layoutY="14.0" prefHeight="17.0" prefWidth="375.0" text="Rangliste 5x5 Boggle">
+               <font>
+                  <Font name="Calibri Bold" size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="loadLabel5" layoutX="75.0" layoutY="227.0" text="Lade Rangliste...">
+               <font>
+                  <Font size="32.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane prefHeight="500.0" prefWidth="375.0">
+         <children>
+            <Label alignment="CENTER" layoutY="14.0" prefHeight="17.0" prefWidth="375.0" text="Rangliste 4x4 Boggle">
+               <font>
+                  <Font name="Calibri Bold" size="30.0" />
+               </font>
+            </Label>
+            <ListView fx:id="rankingList4" fixedCellSize="50.0" layoutY="59.0" prefHeight="441.0" prefWidth="375.0" visible="false" />
+            <Button fx:id="backButton" ellipsisString="←" layoutX="14.0" layoutY="17.0" mnemonicParsing="false" onAction="#backToMainMenu" prefHeight="6.0" prefWidth="9.0" text="←" wrapText="true">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Label fx:id="loadLabel4" layoutX="75.0" layoutY="227.0" text="Lade Rangliste...">
+               <font>
+                  <Font size="32.0" />
+               </font>
+            </Label>
+            <Line endX="375.0" endY="500.0" startX="375.0" stroke="#36454d" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="2.0" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

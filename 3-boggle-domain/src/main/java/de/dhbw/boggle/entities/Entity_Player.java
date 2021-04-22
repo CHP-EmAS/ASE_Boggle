@@ -1,6 +1,5 @@
 package de.dhbw.boggle.entities;
 
-import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
 

@@ -49,8 +49,11 @@ public class API_DWDS_Digital_Dictionary implements Domain_Service_Duden_Check {
     @Override
     public boolean lookUpWordInDuden(VO_Word word) {
 
-        if(!checkedIfAPIIsAvailable || !apiAvailable)
+        if(!checkedIfAPIIsAvailable)
            throw new RuntimeException("API is not available or has not yet been checked for availability!");
+
+        if(!apiAvailable)
+            return false;
 
         String upperCaseWord = word.getWord();
         String lowerCaseWord = upperCaseWord.toLowerCase();

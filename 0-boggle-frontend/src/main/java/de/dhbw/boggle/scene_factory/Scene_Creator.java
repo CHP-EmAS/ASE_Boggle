@@ -1,6 +1,6 @@
 package de.dhbw.boggle.scene_factory;
 
-import de.dhbw.boggle.Scene_Manager;
+import de.dhbw.boggle.manager.Scene_Manager;
 import de.dhbw.boggle.scenes.Boggle_Scene;
 
 import java.util.List;

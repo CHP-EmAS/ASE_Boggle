@@ -87,7 +87,6 @@ public class Service_Word_Verification implements Domain_Service_Word_Verificati
 
                 if(dudenCheckService.lookUpWordInDuden(guessedWord)) {
                     playerGuess.setCorrect(calculatePointsForWord( guessedWord), usedLetterList);
-                    continue;
                 } else {
                     playerGuess.setWrong(usedLetterList);
                 }
@@ -130,14 +129,14 @@ public class Service_Word_Verification implements Domain_Service_Word_Verificati
             if(checkedBranchMatrix != null) {
                 correctUseMatrix = checkedBranchMatrix;
             }
-        };
+        }
 
         return correctUseMatrix;
     }
 
     private List<VO_Matrix_Index_Pair> getAllIndexPairsForALetterInDiceMatrix(VO_Dice_Side[][] diceMatrix, int matrixSize, char searchLetter) {
 
-        List<VO_Matrix_Index_Pair> indexPairList = new ArrayList<VO_Matrix_Index_Pair>();
+        List<VO_Matrix_Index_Pair> indexPairList = new ArrayList<>();
 
         for(int i = 0; i < matrixSize; i++) {
             for(int j = 0; j < matrixSize; j++) {
@@ -148,7 +147,7 @@ public class Service_Word_Verification implements Domain_Service_Word_Verificati
         }
 
         return indexPairList;
-    };
+    }
 
     private boolean[][] checkIfWordIsPossibleFromGivenStartingPoint(String remainingWord, VO_Matrix_Index_Pair startingPoint, VO_Dice_Side[][] diceSideMatrix, int matrixSize, boolean[][] letterUseMatrix) {
 
@@ -185,7 +184,6 @@ public class Service_Word_Verification implements Domain_Service_Word_Verificati
                 //set use flag for this position to true
                 if(diceSideMatrix[newI][newJ].getLetter() == firstLetter && !letterUseMatrix[newI][newJ]) {
                     foundPositions.add(new VO_Matrix_Index_Pair(newI, newJ));
-                    letterUseMatrix[newI][newJ] = true;
                 }
             }
         }
@@ -198,13 +196,22 @@ public class Service_Word_Verification implements Domain_Service_Word_Verificati
 
         //start from each new starting point and check if the remaining word can be created with the help of a recursive loop
         for(VO_Matrix_Index_Pair newStartPosition : foundPositions) {
-            boolean[][] checkedBranchMatrix = checkIfWordIsPossibleFromGivenStartingPoint(remainingString, newStartPosition, diceSideMatrix, matrixSize, letterUseMatrix);
+
+            //create a array copy for each new branch and set used letter for the specific branch
+            boolean[][] newBranchLetterUseMatrix = Arrays.stream(letterUseMatrix).map(boolean[]::clone).toArray(boolean[][]::new);
+            newBranchLetterUseMatrix[newStartPosition.getI()][newStartPosition.getJ()] = true;
+
+            //return null if branch cannot create remaining word or an matrix where all used letter to create the word are marked with true
+            boolean[][] checkedBranchMatrix = checkIfWordIsPossibleFromGivenStartingPoint(remainingString, newStartPosition, diceSideMatrix, matrixSize, newBranchLetterUseMatrix);
 
             if(checkedBranchMatrix != null) {
+                //overwrite correctUseMatrix to the found correct matrix
+                //multiple correct matrix are possible but only the last one found will be returned
                 correctUseMatrix = checkedBranchMatrix;
             }
         }
 
+        //returns null if no matrix found or one found matrix
         return correctUseMatrix;
     }
 

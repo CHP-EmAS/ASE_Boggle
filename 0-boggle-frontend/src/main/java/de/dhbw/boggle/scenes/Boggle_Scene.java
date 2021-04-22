@@ -1,6 +1,6 @@
 package de.dhbw.boggle.scenes;
 
-import de.dhbw.boggle.Scene_Manager;
+import de.dhbw.boggle.manager.Scene_Manager;
 import javafx.scene.Scene;
 
 public abstract class Boggle_Scene {

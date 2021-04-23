@@ -10,7 +10,6 @@ public abstract class Scene_Creator {
     public enum SCENE {
         WELCOME_SCENE,
         MAIN_MENU,
-        START_GAME_SCENE,
         GAME_SCENE,
         RANKING_LIST_SCENE,
         CREDITS_SCENE

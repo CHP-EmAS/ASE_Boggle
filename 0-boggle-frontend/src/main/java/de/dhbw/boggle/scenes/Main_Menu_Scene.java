@@ -65,7 +65,7 @@ public class Main_Menu_Scene extends Boggle_Scene {
     }
 
     public void goToCredits(){
-
+        sceneManager.changeScene(Scene_Creator.SCENE.CREDITS_SCENE);
     }
 
     private void nameInput(KeyEvent event) {
@@ -81,6 +81,7 @@ public class Main_Menu_Scene extends Boggle_Scene {
                     playerNameLabel.setDisable(false);
                     boggle4Button.setDisable(false);
                     boggle5Button.setDisable(false);
+                    boggle4Button.requestFocus();
                 }
             }
         } else {

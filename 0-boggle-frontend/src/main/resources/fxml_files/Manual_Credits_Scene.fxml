@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="500" prefWidth="750" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.dhbw.boggle.scenes.Manual_Credits_Scene">
+   <children>
+      <ScrollPane hbarPolicy="NEVER" prefHeight="500.0" prefWidth="750.0">
+         <content>
+            <AnchorPane prefHeight="1197.0" prefWidth="735.0">
+               <children>
+                  <AnchorPane layoutX="93.0" layoutY="45.0" prefHeight="1152.0" prefWidth="554.0">
+                     <children>
+                        <ImageView fitHeight="169.0" fitWidth="176.0" layoutX="187.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/logo.png" />
+                           </image>
+                        </ImageView>
+                        <Label alignment="CENTER" layoutY="188.0" prefHeight="47.0" prefWidth="551.0" text="Anleitung" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="29.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="TOP_LEFT" layoutY="235.0" prefHeight="95.0" prefWidth="551.0" text="Das Ziel von Boggle ist möglichst viele Worte aus dem gegebenen Buchstaben-Salat herauszulesen. Worte müssen mindestens drei Buchstaben haben und mithilfe der Tastatur eingetippt werden. Mit Enter wird das Wort einer Liste hinzugefügt. Der Spieler hat dafür maximal drei Minuten Zeit." textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" layoutY="330.0" prefHeight="47.0" prefWidth="551.0" text="Wort-Regeln" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="29.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="TOP_LEFT" layoutY="377.0" prefHeight="201.0" prefWidth="551.0" text="Aus dem im 4x4- bzw 5x5-Quadrat liegenden Buchstaben muss der Spieler möglichst viele unterschiedliche Worte herauslesen. Man beginnt bei irgendeinem der Buchstaben und versucht mit Hilfe eines benachbarten Buchstaben - senkrecht, waagerecht oder diagonal - ein Wort anzufangen. Nicht erlaubt ist die mehrfache Benutzung ein und desselben Buchstabens in dem gleichen Wort. Nach abgelaufener Zeit werden alle Worte ausgewertet und in einem Online Wörterbuch nachgeschlagen. Es werden alle Worte mit einer Punkzahl versehen, die mit dem Buchstabensalat erstellt werden können und im Online Wörterbuch nachschlagbar sind." textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" layoutY="578.0" prefHeight="47.0" prefWidth="551.0" text="Punkte &amp; Rangliste" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="29.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="TOP_LEFT" layoutX="-2.0" layoutY="625.0" prefHeight="47.0" prefWidth="556.0" text="Jedes korrekte Wort erhält eine Punkzahl. Diese orientiert sich an der Länge des Wortes:" textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="TOP_LEFT" layoutX="148.0" layoutY="672.0" prefHeight="25.0" prefWidth="256.0" text="3 oder 4 Buchstaben:            1 Punkt" textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="TOP_LEFT" layoutX="148.0" layoutY="722.0" prefHeight="25.0" prefWidth="256.0" text="5 Buchstaben:                      2 Punkte" textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="TOP_LEFT" layoutX="148.0" layoutY="697.0" prefHeight="25.0" prefWidth="256.0" text="6 Buchstaben:                      2 Punkte" textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="TOP_LEFT" layoutX="148.0" layoutY="747.0" prefHeight="25.0" prefWidth="256.0" text="7 Buchstaben:                      5 Punkte" textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="TOP_LEFT" layoutX="148.0" layoutY="772.0" prefHeight="25.0" prefWidth="256.0" text="8 oder mehr Buchstaben: 11 Punkte" textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="TOP_LEFT" layoutX="-2.0" layoutY="797.0" prefHeight="72.0" prefWidth="556.0" text="Alle Punkte werden anschließend zu einer Gesamtpunktzahl addiert. Diese Punkzahl wird mit dem Namen des Spielers in die Rangliste des jeweiligen Spielmodi eingetragen." textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="TOP_LEFT" layoutX="-4.0" layoutY="932.0" prefHeight="95.0" prefWidth="556.0" text="Dieses Projekt entstand im Rahmen der Vorlesung Advanced Software Engineering an der DHBW Karlsruhe 2021. Zu den Kursinhalten und Übungen gehören Clean Architectur, DDD, Entwurfsmuster, Programmierprinzipien, Testen und Refactoring. " textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" layoutX="-2.0" layoutY="879.0" prefHeight="47.0" prefWidth="551.0" text="Credits" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="29.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="117.0" fitWidth="269.0" layoutX="139.0" layoutY="1027.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/dhbw.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+      <Button fx:id="backButton" ellipsisString="←" layoutX="14.0" layoutY="17.0" mnemonicParsing="false" onAction="#backToMainMenu" prefHeight="6.0" prefWidth="9.0" text="←" wrapText="true">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

@@ -217,8 +217,6 @@ public class Service_Word_Verification implements Domain_Service_Word_Verificati
 
     private List<VO_Matrix_Index_Pair> convertBooleanMatrixToIndexPairList(boolean[][] booleanMatrix, short matrixSize) {
 
-        System.out.println(booleanMatrix.length);
-
         List<VO_Matrix_Index_Pair> indexPairList = new ArrayList<>();
 
         for(int i = 0; i < matrixSize; i++) {

@@ -13,7 +13,10 @@ public class API_Test {
 
     @BeforeEach
     public void setUp() {
+
         api = new API_DWDS_Digital_Dictionary();
+        api.dudenServiceIsAvailable();
+
     }
 
     @Test

@@ -72,7 +72,6 @@ public class Welcome_Scene extends Boggle_Scene {
     }
 
     public void goToMenu() {
-        System.out.println("goToMenu");
         sceneManager.changeScene(Scene_Creator.SCENE.MAIN_MENU);
     }
 }

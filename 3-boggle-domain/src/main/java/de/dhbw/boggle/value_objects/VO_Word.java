@@ -1,4 +1,4 @@
-package de.dhbw.boggle.valueobjects;
+package de.dhbw.boggle.value_objects;
 
 import java.util.Objects;
 
@@ -9,7 +9,7 @@ public final class VO_Word {
         if(isValid(uppercaseWord)) {
             this.uppercaseWord = uppercaseWord;
         } else {
-            throw new IllegalArgumentException("String '" + uppercaseWord + "' is invalid for a Word! All letters must be uppercase letters and the Word must have at lest two letter");
+            throw new IllegalArgumentException("String '" + uppercaseWord + "' is invalid for a Word! All letters must be uppercase letters and the Word must have at lest three letter");
         }
     }
 

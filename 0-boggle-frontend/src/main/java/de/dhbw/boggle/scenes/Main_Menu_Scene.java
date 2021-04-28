@@ -2,7 +2,7 @@ package de.dhbw.boggle.scenes;
 
 import de.dhbw.boggle.entities.Entity_Player;
 import de.dhbw.boggle.scene_factory.Scene_Creator;
-import de.dhbw.boggle.valueobjects.VO_Field_Size;
+import de.dhbw.boggle.value_objects.VO_Field_Size;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,7 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 
 import java.util.List;
 

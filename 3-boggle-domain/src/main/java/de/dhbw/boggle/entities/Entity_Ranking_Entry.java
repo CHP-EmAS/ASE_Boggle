@@ -1,8 +1,8 @@
 package de.dhbw.boggle.entities;
 
-import de.dhbw.boggle.valueobjects.VO_Date;
-import de.dhbw.boggle.valueobjects.VO_Field_Size;
-import de.dhbw.boggle.valueobjects.VO_Points;
+import de.dhbw.boggle.value_objects.VO_Date;
+import de.dhbw.boggle.value_objects.VO_Field_Size;
+import de.dhbw.boggle.value_objects.VO_Points;
 
 import java.util.Objects;
 import java.util.UUID;

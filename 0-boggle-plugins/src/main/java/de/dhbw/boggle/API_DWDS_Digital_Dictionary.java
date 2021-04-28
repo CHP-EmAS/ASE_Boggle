@@ -1,7 +1,7 @@
 package de.dhbw.boggle;
 
-import de.dhbw.boggle.domain_services.Domain_Service_Duden_Check;
-import de.dhbw.boggle.valueobjects.VO_Word;
+import de.dhbw.boggle.domain_services.Domain_Service_Dictionary_Check;
+import de.dhbw.boggle.value_objects.VO_Word;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -12,13 +12,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
-public class API_DWDS_Digital_Dictionary implements Domain_Service_Duden_Check {
+public class API_DWDS_Digital_Dictionary implements Domain_Service_Dictionary_Check {
 
     private static boolean checkedIfAPIIsAvailable = false;
     private static boolean apiAvailable = false;
 
     @Override
-    public boolean dudenServiceIsAvailable() {
+    public boolean dictionaryServiceIsAvailable() {
 
         if(checkedIfAPIIsAvailable)
             return apiAvailable;
@@ -47,7 +47,7 @@ public class API_DWDS_Digital_Dictionary implements Domain_Service_Duden_Check {
     }
 
     @Override
-    public boolean lookUpWordInDuden(VO_Word word) {
+    public boolean lookUpWordInDictionary(VO_Word word) {
 
         if(!checkedIfAPIIsAvailable)
            throw new RuntimeException("API is not available or has not yet been checked for availability!");

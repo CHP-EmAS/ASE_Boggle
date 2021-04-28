@@ -1,9 +1,9 @@
 package de.dhbw.boggle.entities;
 
 import de.dhbw.boggle.aggregates.Aggregate_Playing_Field;
-import de.dhbw.boggle.valueobjects.VO_Matrix_Index_Pair;
-import de.dhbw.boggle.valueobjects.VO_Points;
-import de.dhbw.boggle.valueobjects.VO_Word;
+import de.dhbw.boggle.value_objects.VO_Matrix_Index_Pair;
+import de.dhbw.boggle.value_objects.VO_Points;
+import de.dhbw.boggle.value_objects.VO_Word;
 
 import java.util.*;
 

@@ -50,13 +50,11 @@ public class Welcome_Scene extends Boggle_Scene {
                     @Override
                     protected Boolean call() throws Exception {
                         Thread.sleep(1000);
-                        return api.dudenServiceIsAvailable();
+                        return api.dictionaryServiceIsAvailable();
                     }
                 };
             }
         };
-
-        apiAvailabilityCheck.start();
 
         apiAvailabilityCheck.setOnSucceeded(workerStateEvent -> {
             if(apiAvailabilityCheck.getValue()) {
@@ -69,6 +67,8 @@ public class Welcome_Scene extends Boggle_Scene {
             playWithoutPoints.setVisible(true);
             playWithoutPoints.setDisable(false);
         });
+
+        apiAvailabilityCheck.start();
     }
 
     public void goToMenu() {

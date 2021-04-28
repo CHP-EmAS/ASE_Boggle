@@ -1,7 +1,7 @@
 package de.dhbw.boggle.player_guess;
 
 import de.dhbw.boggle.entities.Entity_Player_Guess;
-import de.dhbw.boggle.valueobjects.VO_Matrix_Index_Pair;
+import de.dhbw.boggle.value_objects.VO_Matrix_Index_Pair;
 
 import java.util.ArrayList;
 import java.util.List;

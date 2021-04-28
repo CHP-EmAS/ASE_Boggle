@@ -1,7 +1,7 @@
 package de.dhbw.boggle.repositories;
 
 import de.dhbw.boggle.entities.Entity_Ranking_Entry;
-import de.dhbw.boggle.valueobjects.VO_Field_Size;
+import de.dhbw.boggle.value_objects.VO_Field_Size;
 
 import java.util.List;
 

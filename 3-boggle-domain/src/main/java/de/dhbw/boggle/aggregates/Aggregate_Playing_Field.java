@@ -1,8 +1,8 @@
 package de.dhbw.boggle.aggregates;
 
 import de.dhbw.boggle.entities.Entity_Player;
-import de.dhbw.boggle.valueobjects.VO_Dice;
-import de.dhbw.boggle.valueobjects.VO_Field_Size;
+import de.dhbw.boggle.value_objects.VO_Dice;
+import de.dhbw.boggle.value_objects.VO_Field_Size;
 import de.dhbw.boggle.entities.Entity_Letter_Salad;
 
 import java.util.Objects;

@@ -1,7 +1,7 @@
 package de.dhbw.boggle.dice_side_matrix;
 
 import de.dhbw.boggle.aggregates.Aggregate_Playing_Field;
-import de.dhbw.boggle.valueobjects.VO_Dice_Side;
+import de.dhbw.boggle.value_objects.VO_Dice_Side;
 
 import java.util.function.Function;
 

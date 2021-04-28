@@ -1,13 +1,13 @@
 package de.dhbw.boggle.services;
 
 import de.dhbw.boggle.aggregates.Aggregate_Playing_Field;
-import de.dhbw.boggle.domain_services.Domain_Service_Duden_Check;
+import de.dhbw.boggle.domain_services.Domain_Service_Dictionary_Check;
 import de.dhbw.boggle.domain_services.Domain_Service_Points_Calculation;
 import de.dhbw.boggle.domain_services.Domain_Service_Word_Verification;
 import de.dhbw.boggle.entities.Entity_Letter_Salad;
 import de.dhbw.boggle.entities.Entity_Player_Guess;
 import de.dhbw.boggle.repositories.Repository_Player_Guess;
-import de.dhbw.boggle.valueobjects.*;
+import de.dhbw.boggle.value_objects.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,9 +16,9 @@ import java.util.List;
 public class Service_Word_Verification implements Domain_Service_Word_Verification, Domain_Service_Points_Calculation {
 
     private final Repository_Player_Guess playerGuessRepository;
-    private final Domain_Service_Duden_Check dudenCheckService;
+    private final Domain_Service_Dictionary_Check dudenCheckService;
 
-    Service_Word_Verification(Repository_Player_Guess playerGuessRepository,Domain_Service_Duden_Check dudenCheckService) {
+    Service_Word_Verification(Repository_Player_Guess playerGuessRepository, Domain_Service_Dictionary_Check dudenCheckService) {
         this.playerGuessRepository = playerGuessRepository;
         this.dudenCheckService = dudenCheckService;
     }
@@ -85,7 +85,7 @@ public class Service_Word_Verification implements Domain_Service_Word_Verificati
 
                 List<VO_Matrix_Index_Pair> usedLetterList = convertBooleanMatrixToIndexPairList(wordMatrix, playingField.getPlayingFieldSize().getSize());
 
-                if(dudenCheckService.lookUpWordInDuden(guessedWord)) {
+                if(dudenCheckService.lookUpWordInDictionary(guessedWord)) {
                     playerGuess.setCorrect(calculatePointsForWord( guessedWord), usedLetterList);
                 } else {
                     playerGuess.setWrong(usedLetterList);

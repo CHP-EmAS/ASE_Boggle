@@ -7,9 +7,9 @@ import de.dhbw.boggle.entities.Entity_Player_Guess;
 import de.dhbw.boggle.repositories.Repository_Player_Guess;
 import de.dhbw.boggle.repositories.Repository_Playing_Field;
 import de.dhbw.boggle.repository_bridges.Repository_Bridge_Playing_Field;
-import de.dhbw.boggle.valueobjects.VO_Field_Size;
-import de.dhbw.boggle.valueobjects.VO_Points;
-import de.dhbw.boggle.valueobjects.VO_Word;
+import de.dhbw.boggle.value_objects.VO_Field_Size;
+import de.dhbw.boggle.value_objects.VO_Points;
+import de.dhbw.boggle.value_objects.VO_Word;
 
 import java.time.Duration;
 
@@ -38,7 +38,7 @@ public class Service_Game implements Domain_Service_Game {
 
     private VO_Points totalScore;
 
-    public Service_Game(Domain_Service_Duden_Check dudenCheckService,Domain_Service_Timer gameTimer, Repository_Player_Guess playerGuessRepository) {
+    public Service_Game(Domain_Service_Dictionary_Check dudenCheckService, Domain_Service_Timer gameTimer, Repository_Player_Guess playerGuessRepository) {
         this.playingFieldRepository = new Repository_Bridge_Playing_Field();
         this.playerGuessRepository = playerGuessRepository;
 

@@ -1,7 +1,7 @@
 package de.dhbw.boggle.services;
 
-import de.dhbw.boggle.valueobjects.VO_Dice;
-import de.dhbw.boggle.valueobjects.VO_Field_Size;
+import de.dhbw.boggle.value_objects.VO_Dice;
+import de.dhbw.boggle.value_objects.VO_Field_Size;
 
 import java.util.Arrays;
 

@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import de.dhbw.boggle.valueobjects.VO_Date;
-import de.dhbw.boggle.valueobjects.VO_Field_Size;
-import de.dhbw.boggle.valueobjects.VO_Points;
+import de.dhbw.boggle.value_objects.VO_Date;
+import de.dhbw.boggle.value_objects.VO_Field_Size;
+import de.dhbw.boggle.value_objects.VO_Points;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

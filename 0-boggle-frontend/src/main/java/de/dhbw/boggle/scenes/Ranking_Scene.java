@@ -8,7 +8,7 @@ import de.dhbw.boggle.ranking_entry.Ranking_Entry;
 import de.dhbw.boggle.repositories.Repository_Ranking;
 import de.dhbw.boggle.scene_factory.Scene_Creator;
 import de.dhbw.boggle.ui_elements.Ranking_List_View_Cell;
-import de.dhbw.boggle.valueobjects.VO_Field_Size;
+import de.dhbw.boggle.value_objects.VO_Field_Size;
 import javafx.concurrent.Service;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

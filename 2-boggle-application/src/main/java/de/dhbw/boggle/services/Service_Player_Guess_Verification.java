@@ -13,12 +13,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Service_Word_Verification implements Domain_Service_Word_Verification, Domain_Service_Points_Calculation {
+public class Service_Player_Guess_Verification implements Domain_Service_Word_Verification, Domain_Service_Points_Calculation {
 
     private final Repository_Player_Guess playerGuessRepository;
     private final Domain_Service_Dictionary_Check dudenCheckService;
 
-    Service_Word_Verification(Repository_Player_Guess playerGuessRepository, Domain_Service_Dictionary_Check dudenCheckService) {
+    Service_Player_Guess_Verification(Repository_Player_Guess playerGuessRepository, Domain_Service_Dictionary_Check dudenCheckService) {
         this.playerGuessRepository = playerGuessRepository;
         this.dudenCheckService = dudenCheckService;
     }

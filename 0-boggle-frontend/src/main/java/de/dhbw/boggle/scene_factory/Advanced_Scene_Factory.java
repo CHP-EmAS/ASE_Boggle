@@ -18,6 +18,7 @@ public class Advanced_Scene_Factory extends Scene_Creator{
         };
 
         newScene.validateArgList(argList);
+
         return newScene;
     }
 }

@@ -42,7 +42,7 @@ public class Service_Game implements Domain_Service_Game {
         this.playingFieldRepository = new Repository_Bridge_Playing_Field();
         this.playerGuessRepository = playerGuessRepository;
 
-        Service_Word_Verification wordService = new Service_Word_Verification(this.playerGuessRepository, dudenCheckService);
+        Service_Player_Guess_Verification wordService = new Service_Player_Guess_Verification(this.playerGuessRepository, dudenCheckService);
         wordVerificationService = wordService;
         pointsCalculationService = wordService;
 

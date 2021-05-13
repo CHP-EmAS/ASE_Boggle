@@ -17,26 +17,22 @@ public abstract class Scene_Creator {
 
     public Boggle_Scene getScene(SCENE sceneName, Scene_Manager sceneManager, List<Object> argList) {
         Boggle_Scene newScene = createBoggleScene(sceneName, argList);
-
-        newScene.setSceneManager(sceneManager);
-
-        newScene.init();
-        newScene.build();
-
-        return newScene;
+        return finalizeScene(newScene, sceneManager);
     }
 
     public Boggle_Scene getScene(SCENE sceneName, Scene_Manager sceneManager) {
         Boggle_Scene newScene = createBoggleScene(sceneName, null );
-
-        newScene.setSceneManager(sceneManager);
-
-        newScene.init();
-        newScene.build();
-
-        return newScene;
+        return finalizeScene(newScene, sceneManager);
     }
 
     protected abstract Boggle_Scene createBoggleScene(SCENE sceneName, List<Object> argList);
 
+    private Boggle_Scene finalizeScene(Boggle_Scene scene, Scene_Manager sceneManager) {
+        scene.setSceneManager(sceneManager);
+
+        scene.init();
+        scene.build();
+
+        return scene;
+    }
 }

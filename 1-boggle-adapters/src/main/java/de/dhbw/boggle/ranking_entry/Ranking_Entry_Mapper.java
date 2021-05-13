@@ -1,7 +1,6 @@
 package de.dhbw.boggle.ranking_entry;
 
 import de.dhbw.boggle.entities.Entity_Ranking_Entry;
-import de.dhbw.boggle.ranking_entry.Ranking_Entry;
 
 import java.util.function.Function;
 

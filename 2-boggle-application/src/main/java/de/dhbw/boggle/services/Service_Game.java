@@ -56,13 +56,12 @@ public class Service_Game implements Domain_Service_Game {
 
         Service_Dice_Builder diceBuilder = new Service_Dice_Builder();
 
-        Aggregate_Playing_Field newPlayingField = new Aggregate_Playing_Field(
+        Aggregate_Playing_Field newPlayingField = this.playingFieldRepository.addPlayingField(
                 diceBuilder.buildDiceArray(fieldSize),
                 fieldSize,
                 player
         );
 
-        this.playingFieldRepository.addPlayingField(newPlayingField);
         this.currentPlayingFieldId = newPlayingField.getId();
 
         gameStatus = GAME_STATUS.INITIALIZED;
@@ -128,7 +127,7 @@ public class Service_Game implements Domain_Service_Game {
         Aggregate_Playing_Field currentPlayingField = this.getPlayingField();
 
         if(!wordVerificationService.wordIsDuplicateGuess(newWord, currentPlayingField)) {
-            playerGuessRepository.addPlayerGuess(new Entity_Player_Guess(newWord, currentPlayingField));
+            playerGuessRepository.addPlayerGuess(newWord, currentPlayingField);
             return true;
         }
 

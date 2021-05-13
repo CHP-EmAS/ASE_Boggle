@@ -32,6 +32,19 @@ public class Repository_Bridge_Ranking implements Repository_Ranking {
     private final List<Entity_Ranking_Entry> rankingEntries = new ArrayList<>();
 
     @Override
+    public Entity_Ranking_Entry addRankingEntry(String playerName, VO_Points scored_points, VO_Field_Size fieldSize, VO_Date date) {
+        if(!rankingFileIsLoaded)
+            throw new RuntimeException("Ranking entries are not loaded! Please load them first!");
+
+        Entity_Ranking_Entry newRankingEntry = new Entity_Ranking_Entry(playerName, scored_points, fieldSize, date);
+
+        rankingEntries.add(newRankingEntry);
+        saveRankingEntriesToFile(rankingFileName);
+
+        return newRankingEntry;
+    }
+
+    @Override
     public void addRankingEntry(Entity_Ranking_Entry rankingEntry) {
         if(!rankingFileIsLoaded)
             throw new RuntimeException("Ranking entries are not loaded! Please load them first!");

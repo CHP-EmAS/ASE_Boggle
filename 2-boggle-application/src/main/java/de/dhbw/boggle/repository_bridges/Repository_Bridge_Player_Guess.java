@@ -1,7 +1,9 @@
 package de.dhbw.boggle.repository_bridges;
 
+import de.dhbw.boggle.aggregates.Aggregate_Playing_Field;
 import de.dhbw.boggle.entities.Entity_Player_Guess;
 import de.dhbw.boggle.repositories.Repository_Player_Guess;
+import de.dhbw.boggle.value_objects.VO_Word;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -11,8 +13,13 @@ public class Repository_Bridge_Player_Guess implements Repository_Player_Guess {
     private final List<Entity_Player_Guess> playerGuesses = new LinkedList<>();
 
     @Override
-    public void addPlayerGuess(Entity_Player_Guess playerGuess) {
+    public Entity_Player_Guess addPlayerGuess(VO_Word word, Aggregate_Playing_Field assignedPlayingField) {
+
+        Entity_Player_Guess playerGuess = new Entity_Player_Guess(word, assignedPlayingField);
+
         playerGuesses.add(0,playerGuess);
+
+        return playerGuess;
     }
 
     @Override

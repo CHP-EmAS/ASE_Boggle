@@ -16,11 +16,11 @@ import java.util.List;
 public class Service_Player_Guess_Verification implements Domain_Service_Word_Verification, Domain_Service_Points_Calculation {
 
     private final Repository_Player_Guess playerGuessRepository;
-    private final Domain_Service_Dictionary_Check dudenCheckService;
+    private final Domain_Service_Dictionary_Check dictionaryCheckService;
 
-    Service_Player_Guess_Verification(Repository_Player_Guess playerGuessRepository, Domain_Service_Dictionary_Check dudenCheckService) {
+    Service_Player_Guess_Verification(Repository_Player_Guess playerGuessRepository, Domain_Service_Dictionary_Check dictionaryCheckService) {
         this.playerGuessRepository = playerGuessRepository;
-        this.dudenCheckService = dudenCheckService;
+        this.dictionaryCheckService = dictionaryCheckService;
     }
 
     @Override
@@ -85,7 +85,7 @@ public class Service_Player_Guess_Verification implements Domain_Service_Word_Ve
 
                 List<VO_Matrix_Index_Pair> usedLetterList = convertBooleanMatrixToIndexPairList(wordMatrix, playingField.getPlayingFieldSize().getSize());
 
-                if(dudenCheckService.lookUpWordInDictionary(guessedWord)) {
+                if(dictionaryCheckService.lookUpWordInDictionary(guessedWord)) {
                     playerGuess.setCorrect(calculatePointsForWord( guessedWord), usedLetterList);
                 } else {
                     playerGuess.setWrong(usedLetterList);

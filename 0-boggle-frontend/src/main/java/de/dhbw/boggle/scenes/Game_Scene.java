@@ -300,21 +300,10 @@ public class Game_Scene extends Advanced_Boggle_Scene {
         guessListView.getItems().addAll(guessList);
     }
 
-    private void updateTime(Duration time) {
-        timerLabel.setText(
-                Mapper_Time.durationToTimeString(time)
-        );
-
-        double currentMillis = time.toMillis();
-        double maxMillis = Service_Game.initialGameTime.toMillis();
-
-        timerProgress.setProgress(currentMillis / maxMillis);
-    }
-
-    private void guessListItemSelected(Player_Guess player_guess) {
+    private void guessListItemSelected(Player_Guess selectedPlayerGuess) {
         String backgroundColor = "#FFA1A1"; //light red (pink)
 
-        if(player_guess.flag == Entity_Player_Guess.Guess_Flag.EXAMINED_CORRECT)
+        if(selectedPlayerGuess.flag == Entity_Player_Guess.Guess_Flag.EXAMINED_CORRECT)
             backgroundColor = "#D7FF91"; //light green
 
         for(int i = 0; i < this.gridSize.getSize(); i++) {
@@ -322,10 +311,10 @@ public class Game_Scene extends Advanced_Boggle_Scene {
 
                 Parent gridCell = letterLabelsGrid[i][j].getParent();
 
-                if(player_guess.flag != Entity_Player_Guess.Guess_Flag.EXAMINED_IMPOSSIBLE) {
+                if(selectedPlayerGuess.flag != Entity_Player_Guess.Guess_Flag.EXAMINED_IMPOSSIBLE) {
                     VO_Matrix_Index_Pair gridCoordinates = new VO_Matrix_Index_Pair(i,j);
 
-                    if(player_guess.usedLetters.contains(gridCoordinates))
+                    if(selectedPlayerGuess.usedLetters.contains(gridCoordinates))
                         gridCell.setStyle("-fx-background-color:" + backgroundColor + "; -fx-border-color: #597380;");
                     else
                         gridCell.setStyle("-fx-border-color: #597380;");
@@ -335,5 +324,16 @@ public class Game_Scene extends Advanced_Boggle_Scene {
                 }
             }
         }
+    }
+
+    private void updateTime(Duration time) {
+        timerLabel.setText(
+                Mapper_Time.durationToTimeString(time)
+        );
+
+        double currentMillis = time.toMillis();
+        double maxMillis = Service_Game.initialGameTime.toMillis();
+
+        timerProgress.setProgress(currentMillis / maxMillis);
     }
 }

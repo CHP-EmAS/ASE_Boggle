@@ -158,37 +158,10 @@ public class Service_Player_Guess_Verification implements Domain_Service_Word_Ve
         char firstLetter = remainingWord.charAt(0);
         String remainingString = remainingWord.substring(1);
 
-        List<VO_Matrix_Index_Pair> foundPositions = new ArrayList<>();
+        //search matching adjacent letters in Matrix and saves them into a Index Pair list
+        List<VO_Matrix_Index_Pair> foundPositions = searchMatchingAdjacentLetterInMatrix(firstLetter, startingPoint, diceSideMatrix, matrixSize, letterUseMatrix);
 
-        //go through all adjacent letters if possible and check if the letters are equal
-        for(int dI = -1; dI < 2; dI++) {
-
-            int newI = startingPoint.getI() + dI;
-
-            //continue if new index i is out of bound
-            if(newI < 0 || newI >= matrixSize)
-                continue;
-
-            for(int dJ = -1; dJ < 2; dJ++) {
-
-                //continue if index pair is on startingPoint
-                if(dI == 0 && dJ == 0) continue;
-
-                int newJ = startingPoint.getJ() + dJ;
-
-                //continue if index j is out of bound
-                if(newJ <0 ||newJ >= matrixSize)
-                    continue;
-
-                //Add index pair to list if letter is the searched one and this letter was not used before
-                //set use flag for this position to true
-                if(diceSideMatrix[newI][newJ].getLetter() == firstLetter && !letterUseMatrix[newI][newJ]) {
-                    foundPositions.add(new VO_Matrix_Index_Pair(newI, newJ));
-                }
-            }
-        }
-
-        //Word not possible for this branch, because letter was not found in the adjacent dices
+        //Word not possible for this branch, because letter was not found in the adjacent letters
         if(foundPositions.size() == 0)
             return null;
 
@@ -213,6 +186,41 @@ public class Service_Player_Guess_Verification implements Domain_Service_Word_Ve
 
         //returns null if no matrix found or one found matrix
         return correctUseMatrix;
+    }
+
+    private List<VO_Matrix_Index_Pair> searchMatchingAdjacentLetterInMatrix(char letterToMatch, VO_Matrix_Index_Pair startingPoint, VO_Dice_Side[][] diceSideMatrix, int matrixSize, boolean[][] letterUseMatrix) {
+
+        List<VO_Matrix_Index_Pair> foundPositions = new ArrayList<>();
+
+        //go through all adjacent letters if possible and check if the letters are equal
+        for(int dI = -1; dI < 2; dI++) {
+
+            int newI = startingPoint.getI() + dI;
+
+            //continue if new index i is out of bound
+            if(newI < 0 || newI >= matrixSize)
+                continue;
+
+            for(int dJ = -1; dJ < 2; dJ++) {
+
+                //continue if index pair is on startingPoint
+                if(dI == 0 && dJ == 0) continue;
+
+                int newJ = startingPoint.getJ() + dJ;
+
+                //continue if index j is out of bound
+                if(newJ <0 ||newJ >= matrixSize)
+                    continue;
+
+                //Add index pair to list if letter is the searched one and this letter was not used before
+                //set use flag for this position to true
+                if(diceSideMatrix[newI][newJ].getLetter() == letterToMatch && !letterUseMatrix[newI][newJ]) {
+                    foundPositions.add(new VO_Matrix_Index_Pair(newI, newJ));
+                }
+            }
+        }
+
+        return foundPositions;
     }
 
     private List<VO_Matrix_Index_Pair> convertBooleanMatrixToIndexPairList(boolean[][] booleanMatrix, short matrixSize) {

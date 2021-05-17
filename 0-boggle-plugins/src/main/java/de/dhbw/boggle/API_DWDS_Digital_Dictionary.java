@@ -87,21 +87,7 @@ public class API_DWDS_Digital_Dictionary implements Domain_Service_Dictionary_Ch
 
                 scanner.close();
 
-                JSONParser jsonParser = new JSONParser();
-                JSONArray wordArray = (JSONArray) jsonParser.parse(responseString);
-
-                if(wordArray.isEmpty()) {
-                    System.out.println("Word not found!");
-                    return false;
-                }
-
-                JSONObject wordDefinition = (JSONObject) wordArray.get(0);
-
-                String wordType = wordDefinition.get("wortart") == null ? "---" : wordDefinition.get("wortart").toString();
-
-                System.out.println("Word found! lemma: " + wordDefinition.get("lemma").toString() + ", type: " + wordType);
-                return true;
-
+                return parseAPIResponse(responseString);
             }
         } catch (IOException | ParseException e) {
             e.printStackTrace();
@@ -109,5 +95,22 @@ public class API_DWDS_Digital_Dictionary implements Domain_Service_Dictionary_Ch
 
         System.out.println("Error while looking up a Word");
         return false;
+    }
+
+    private boolean parseAPIResponse(String responseString) throws ParseException {
+        JSONParser jsonParser = new JSONParser();
+        JSONArray wordArray = (JSONArray) jsonParser.parse(responseString);
+
+        if(wordArray.isEmpty()) {
+            System.out.println("Word not found!");
+            return false;
+        }
+
+        JSONObject wordDefinition = (JSONObject) wordArray.get(0);
+
+        String wordType = wordDefinition.get("wortart") == null ? "---" : wordDefinition.get("wortart").toString();
+
+        System.out.println("Word found! lemma: " + wordDefinition.get("lemma").toString() + ", type: " + wordType);
+        return true;
     }
 }

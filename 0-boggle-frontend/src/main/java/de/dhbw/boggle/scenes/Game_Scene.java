@@ -162,43 +162,47 @@ public class Game_Scene extends Advanced_Boggle_Scene {
     @FXML
     public void eventButtonClicked() {
         if(gameService.getGameStatus() == Service_Game.GAME_STATUS.INITIALIZED) {
-
-            eventButton.setVisible(false);
-            eventButton.setDisable(true);
-
-            timerLabel.setVisible(true);
-            timerLabel.setDisable(false);
-            timerProgress.setVisible(true);
-            timerProgress.setDisable(false);
-
             this.startGame();
         } else if(gameService.getGameStatus() == Service_Game.GAME_STATUS.STOPPED) {
-
-            eventButton.setVisible(false);
-            eventButton.setDisable(true);
-
-            timerProgress.setVisible(true);
-            timerProgress.setDisable(false);
-
-            timerProgress.setProgress(-1);
-
-            wordEvaluation.start();
-
+            startWordEvaluationProcess();
         } else if(gameService.getGameStatus() == Service_Game.GAME_STATUS.EVALUATED) {
-
-            LocalDateTime now = LocalDateTime.now();
-            VO_Date currentDate = new VO_Date(now.getDayOfMonth(), now.getMonth().getValue(), now.getYear());
-
-            Entity_Ranking_Entry newRankingEntry = new Entity_Ranking_Entry(player.getName(), gameService.getTotalScore(), this.gridSize, currentDate);
-
-            List<Object> argList = new ArrayList<>();
-            argList.add(newRankingEntry);
-
-            sceneManager.changeScene(Scene_Creator.SCENE.RANKING_LIST_SCENE, argList);
+            goToRankingListWithNewRankingEntry();
         }
     }
 
+    private void startWordEvaluationProcess() {
+        eventButton.setVisible(false);
+        eventButton.setDisable(true);
+
+        timerProgress.setVisible(true);
+        timerProgress.setDisable(false);
+
+        timerProgress.setProgress(-1);
+
+        wordEvaluation.start();
+    }
+
+    private void goToRankingListWithNewRankingEntry() {
+        LocalDateTime now = LocalDateTime.now();
+        VO_Date currentDate = new VO_Date(now.getDayOfMonth(), now.getMonth().getValue(), now.getYear());
+
+        Entity_Ranking_Entry newRankingEntry = new Entity_Ranking_Entry(player.getName(), gameService.getTotalScore(), this.gridSize, currentDate);
+
+        List<Object> argList = new ArrayList<>();
+        argList.add(newRankingEntry);
+
+        sceneManager.changeScene(Scene_Creator.SCENE.RANKING_LIST_SCENE, argList);
+    }
+
     private void startGame() {
+        eventButton.setVisible(false);
+        eventButton.setDisable(true);
+
+        timerLabel.setVisible(true);
+        timerLabel.setDisable(false);
+        timerProgress.setVisible(true);
+        timerProgress.setDisable(false);
+
         if(gameService.getGameStatus() != Service_Game.GAME_STATUS.INITIALIZED)
             return;
 

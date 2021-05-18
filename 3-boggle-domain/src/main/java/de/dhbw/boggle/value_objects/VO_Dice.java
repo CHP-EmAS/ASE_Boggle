@@ -8,12 +8,9 @@ public final class VO_Dice {
 
     private final VO_Dice_Side[] diceSides = new VO_Dice_Side[6];
 
-    private final Random randomGenerator;
-
     public VO_Dice(VO_Dice_Side[] diceSides){
         if(isValid(diceSides)) {
             System.arraycopy(diceSides, 0, this.diceSides, 0, 6);
-            randomGenerator = new Random();
         } else {
             throw new IllegalArgumentException("Dice side Array must have a length of 6! Length: " + diceSides.length);
         }
@@ -26,13 +23,12 @@ public final class VO_Dice {
                 diceSides[i] = new VO_Dice_Side(diceLetters.charAt(i));
             }
 
-            randomGenerator = new Random();
         } else {
             throw new IllegalArgumentException("Dice letter String must have a length of 6! Length: " + diceLetters.length());
         }
     }
 
-    public VO_Dice_Side getRandomDiceSide() {
+    public VO_Dice_Side getRandomDiceSide(Random randomGenerator) {
         return diceSides[randomGenerator.nextInt(6)];
     }
 

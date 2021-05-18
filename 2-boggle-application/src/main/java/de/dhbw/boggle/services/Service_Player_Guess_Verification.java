@@ -18,7 +18,7 @@ public class Service_Player_Guess_Verification implements Domain_Service_Word_Ve
     private final Repository_Player_Guess playerGuessRepository;
     private final Domain_Service_Dictionary_Check dictionaryCheckService;
 
-    Service_Player_Guess_Verification(Repository_Player_Guess playerGuessRepository, Domain_Service_Dictionary_Check dictionaryCheckService) {
+    public Service_Player_Guess_Verification(Repository_Player_Guess playerGuessRepository, Domain_Service_Dictionary_Check dictionaryCheckService) {
         this.playerGuessRepository = playerGuessRepository;
         this.dictionaryCheckService = dictionaryCheckService;
     }

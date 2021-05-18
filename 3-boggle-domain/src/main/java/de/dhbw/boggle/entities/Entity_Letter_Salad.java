@@ -15,6 +15,7 @@ public class Entity_Letter_Salad {
 
     private boolean theDicesAreCast = false;
 
+    public static long seed = System.currentTimeMillis();
     private final Random randomGenerator;
 
     public Entity_Letter_Salad(VO_Field_Size fieldSize) {
@@ -23,7 +24,7 @@ public class Entity_Letter_Salad {
         diceSideMatrix = new VO_Dice_Side[ this.fieldSize.getSize() ][ this.fieldSize.getSize() ];
 
         this.uuid = UUID.randomUUID().toString();
-        randomGenerator = new Random();
+        randomGenerator = new Random(seed);
 
     }
 
@@ -47,8 +48,6 @@ public class Entity_Letter_Salad {
         if(dices.length != this.fieldSize.getSize() * this.fieldSize.getSize())
             throw new RuntimeException("Number of dices must correspond to the number of matrix elements in the letter salad! There were passed " + dices.length + " dices to a " + this.fieldSize.getSize() + "x" + this.fieldSize.getSize() + " letter salad.");
 
-
-
         LinkedList<VO_Dice> diceList = new LinkedList<>(Arrays.asList(Arrays.copyOf(dices, dices.length)));
 
         for(int i = 0; i < this.fieldSize.getSize(); i++) {
@@ -56,7 +55,7 @@ public class Entity_Letter_Salad {
                 int randomDiceIndex = randomGenerator.nextInt(diceList.size());
                 VO_Dice randomDice = diceList.get(randomDiceIndex);
 
-                diceSideMatrix[i][j] = randomDice.getRandomDiceSide();
+                diceSideMatrix[i][j] = randomDice.getRandomDiceSide(this.randomGenerator);
 
                 diceList.remove(randomDiceIndex);
             }

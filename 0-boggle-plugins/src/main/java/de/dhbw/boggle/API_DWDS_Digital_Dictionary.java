@@ -23,10 +23,6 @@ public class API_DWDS_Digital_Dictionary implements Domain_Service_Dictionary_Ch
         if(checkedIfAPIIsAvailable)
             return apiAvailable;
 
-        checkedIfAPIIsAvailable = true;
-        apiAvailable = true;
-
-        /*
         try {
             URL url = new URL("https://www.dwds.de/api/wb/snippet/?q=Test");
 
@@ -40,7 +36,6 @@ public class API_DWDS_Digital_Dictionary implements Domain_Service_Dictionary_Ch
         } catch (IOException e) {
             e.printStackTrace();
         }
-        */
 
         return apiAvailable;
 

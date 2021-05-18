@@ -17,7 +17,7 @@ public class Async_Service_Word_Evaluation extends Service<Void> {
         return new Task<>() {
             @Override
             protected Void call() {
-                gameService.evaluatesAllGuesses();
+                gameService.evaluateAllGuesses();
                 return null;
             }
         };

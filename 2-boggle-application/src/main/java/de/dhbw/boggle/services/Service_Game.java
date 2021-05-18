@@ -3,7 +3,6 @@ package de.dhbw.boggle.services;
 import de.dhbw.boggle.aggregates.Aggregate_Playing_Field;
 import de.dhbw.boggle.domain_services.*;
 import de.dhbw.boggle.entities.Entity_Player;
-import de.dhbw.boggle.entities.Entity_Player_Guess;
 import de.dhbw.boggle.repositories.Repository_Player_Guess;
 import de.dhbw.boggle.repositories.Repository_Playing_Field;
 import de.dhbw.boggle.repository_bridges.Repository_Bridge_Playing_Field;
@@ -14,15 +13,6 @@ import de.dhbw.boggle.value_objects.VO_Word;
 import java.time.Duration;
 
 public class Service_Game implements Domain_Service_Game {
-
-    public enum GAME_STATUS {
-        CREATED,
-        INITIALIZED,
-        RUNNING,
-        CANCELLED,
-        STOPPED,
-        EVALUATED
-    }
 
     private final Domain_Service_Word_Verification wordVerificationService;
     private final Domain_Service_Points_Calculation pointsCalculationService;
@@ -38,11 +28,11 @@ public class Service_Game implements Domain_Service_Game {
 
     private VO_Points totalScore;
 
-    public Service_Game(Domain_Service_Dictionary_Check dudenCheckService, Domain_Service_Timer gameTimer, Repository_Player_Guess playerGuessRepository) {
+    public Service_Game(Domain_Service_Dictionary_Check dictionaryCheckService, Domain_Service_Timer gameTimer, Repository_Player_Guess playerGuessRepository) {
         this.playingFieldRepository = new Repository_Bridge_Playing_Field();
         this.playerGuessRepository = playerGuessRepository;
 
-        Service_Player_Guess_Verification wordService = new Service_Player_Guess_Verification(this.playerGuessRepository, dudenCheckService);
+        Service_Player_Guess_Verification wordService = new Service_Player_Guess_Verification(this.playerGuessRepository, dictionaryCheckService);
         wordVerificationService = wordService;
         pointsCalculationService = wordService;
 
@@ -135,7 +125,7 @@ public class Service_Game implements Domain_Service_Game {
     }
 
     @Override
-    public void evaluatesAllGuesses() {
+    public void evaluateAllGuesses() {
         if(gameStatus != GAME_STATUS.STOPPED)
             throw new RuntimeException("Guesses can only be evaluated when the game is stopped!");
 
@@ -145,6 +135,7 @@ public class Service_Game implements Domain_Service_Game {
         gameStatus = GAME_STATUS.EVALUATED;
     }
 
+    @Override
     public GAME_STATUS getGameStatus() {
         return gameStatus;
     }
